@@ -1,7 +1,12 @@
 body {
+  margin: 0;
   font-family: sans-serif;
   color: #fff;
   background-color: #242424;
+}
+
+p {
+  margin: 0;
 }
 
 ul {
@@ -11,45 +16,4 @@ ul {
 
 li {
   list-style-type: none;
-}
-
-a {
-  text-decoration: none;
-  color: #fff;
-  transition: color 0.3s ease;
-}
-
-a:hover {
-  color: brown;
-}
-
-.main_app {
-  width: 200px;
-  height: 400px;
-  background-color: aqua;
-}
-
-.login {
-  width: 300px;
-  height: 300px;
-  color: #000;
-  background-color: #976a6a;
-}
-
-.header {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  padding-top: 20px;
-}
-
-.nav_list {
-  display: flex;
-  gap: 10px;
-  color: #fff;
-}
-
-.nav_reg {
-  display: flex;
-  gap: 10px;
 }

@@ -1,0 +1,22 @@
+.header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding-top: 15px;
+}
+
+.navBar {
+  display: flex;
+}
+
+.navBar_items {
+  display: flex;
+  gap: 10px;
+}
+
+.navBar_auth {
+  position: absolute;
+  right: 2%;
+  display: flex;
+  gap: 10px;
+}

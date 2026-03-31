@@ -1,7 +1,8 @@
 import './App.css';
+import Spa from './pages/Spa';
 
 function App() {
-  return <div>Мой проект по авторизации</div>;
+  return <Spa />;
 }
 
 export default App;
