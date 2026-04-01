@@ -1,6 +1,7 @@
 import styles from './Spa.module.css';
-import Login from './Login';
-import Register from './Register';
+import { Link } from 'react-router-dom';
+import Login from './Auth/Login';
+import Register from './Auth/Register';
 
 function Spa() {
   return (
@@ -19,8 +20,12 @@ function Spa() {
         </ul>
       </nav>
       <nav className={styles.navBar_auth}>
-        <Login />
-        <Register />
+        <Link to={'/login'} className={styles.link}>
+          Авторизоваться
+        </Link>
+        <Link to={'/register'} className={styles.link}>
+          Регистрация
+        </Link>
       </nav>
     </header>
   );
