@@ -1,5 +1,4 @@
 function MyInput({ props }) {
-  console.log(props);
   return <input {...props} />;
 }
 

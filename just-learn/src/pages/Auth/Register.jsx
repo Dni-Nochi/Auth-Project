@@ -7,13 +7,13 @@ function Register() {
     <div className={styles.auth_cont}>
       <form className={styles.auth_form}>
         <p>Зарегистрироваться</p>
-        <MyInput
+        {/* <MyInput
           props={{
             type: 'text',
             placeholder: 'Nick name',
             className: styles.auth_input,
           }}
-        />
+        /> */}
         <MyInput
           props={{
             type: 'email',
