@@ -1,22 +1,13 @@
 import { useState } from 'react';
 import styles from './Auth.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MyInput from '../../components/MyInput';
 
 function Login() {
+  const navigate = useNavigate();
   const [usernameF, setUsernameF] = useState('');
   const [userPassword, setUserPassword] = useState('');
-
-  function getUsername(e) {
-    let nameValue = e.target.value;
-    setUsernameF(nameValue);
-    console.log(usernameF);
-  }
-
-  function getUserPassword(e) {
-    let userPassword = e.target.value;
-    setUserPassword(userPassword);
-  }
+  const [errorFetch, setErrorFetch] = useState('');
 
   async function checkFetch(e) {
     e.preventDefault();
@@ -28,16 +19,26 @@ function Login() {
         },
         body: JSON.stringify({ username: usernameF, password: userPassword }),
       });
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
       const data = await response.json();
-      console.log(data);
+
+      if (!response.ok) {
+        throw new Error(data.message);
+      }
+      setErrorFetch(data.status);
+      if (data.status === 'Успешно прошел') {
+        console.log(errorFetch);
+        setTimeout(() => {
+          navigate('/');
+        }, 1000);
+      }
+      return data;
     } catch (err) {
       console.log({ message: err.message });
+      setErrorFetch(err.message);
       return { message: err.message };
     }
   }
+
   return (
     <div className={styles.auth_cont}>
       <form className={styles.auth_form}>
@@ -48,21 +49,27 @@ function Login() {
             placeholder: 'email',
             autoComplete: 'username',
             className: styles.auth_input,
-            onChange: (e) => getUsername(e),
+            onChange: (e) => {
+              setUsernameF(e.target.value);
+            },
           }}
         />
+
         <MyInput
           props={{
             type: 'password',
             placeholder: 'password',
             autoComplete: 'current-password',
             className: styles.auth_input,
-            onChange: (e) => getUserPassword(e),
+            onChange: (e) => {
+              setUserPassword(e.target.value);
+            },
           }}
         />
         <Link to={'/'} className={styles.link}>
           Главная страница
         </Link>
+        {errorFetch}
         <button onClick={(e) => checkFetch(e)}>Проверка запроса</button>
       </form>
     </div>
