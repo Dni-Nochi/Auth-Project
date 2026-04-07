@@ -1,13 +1,15 @@
-import { useState } from 'react';
 import styles from './Auth.module.css';
+import { useState } from 'react';
+// import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import MyInput from '../../components/MyInput';
 
 function Login() {
   const navigate = useNavigate();
+
   const [usernameF, setUsernameF] = useState('');
   const [userPassword, setUserPassword] = useState('');
-  const [errorFetch, setErrorFetch] = useState('');
+  const [dataAnswer, setDataAnswer] = useState('');
 
   async function checkFetch(e) {
     e.preventDefault();
@@ -24,17 +26,13 @@ function Login() {
       if (!response.ok) {
         throw new Error(data.message);
       }
-      setErrorFetch(data.status);
-      if (data.status === 'Успешно прошел') {
-        console.log(errorFetch);
-        setTimeout(() => {
-          navigate('/');
-        }, 1000);
-      }
-      return data;
+
+      localStorage.setItem('token', data.token);
+
+      setDataAnswer(data.status);
+      setTimeout(() => navigate('/'), 1000);
     } catch (err) {
-      console.log({ message: err.message });
-      setErrorFetch(err.message);
+      setDataAnswer(err.message);
       return { message: err.message };
     }
   }
@@ -66,10 +64,10 @@ function Login() {
             },
           }}
         />
-        <Link to={'/'} className={styles.link}>
-          Главная страница
+        <Link to={'/register'} className={styles.link}>
+          Зарегистрироваться, если нет аккаунта
         </Link>
-        {errorFetch}
+        {dataAnswer}
         <button onClick={(e) => checkFetch(e)}>Проверка запроса</button>
       </form>
     </div>

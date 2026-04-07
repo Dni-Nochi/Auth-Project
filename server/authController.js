@@ -22,7 +22,7 @@ class AuthController {
           .status(400)
           .json({ message: 'Ошибка при регистрации', errors });
       }
-      const { username, password } = req.body;
+      const { username, password, gitHubUrl } = req.body;
       const candidate = await User.findOne({ username });
       if (candidate) {
         return res
@@ -34,6 +34,7 @@ class AuthController {
       const user = new User({
         username,
         password: hashPassword,
+        gitHubUrl,
         roles: [userRole.value],
       });
       await user.save();
@@ -69,6 +70,23 @@ class AuthController {
       res.json(users);
     } catch (e) {
       console.log(e);
+    }
+  }
+  async updateProfile(req, res) {
+    try {
+      const { gitHubUrl } = req.body;
+      const userId = req.user.id;
+
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { gitHubUrl },
+        { new: trur },
+      ).select('-password');
+
+      return res.json(updatedUser);
+    } catch (e) {
+      console.log(e);
+      res.status(400).json({ message: 'Ошибка при обновлении профиля' });
     }
   }
 }

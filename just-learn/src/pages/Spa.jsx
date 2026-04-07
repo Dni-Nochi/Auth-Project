@@ -1,33 +1,32 @@
 import styles from './Spa.module.css';
-import { Link } from 'react-router-dom';
-import Login from './Auth/Login';
-import Register from './Auth/Register';
+import { useState, useEffect } from 'react';
+import { Outlet } from 'react-router-dom';
+import HeaderNav from '../components/HeaderNav';
+import HeaderAuth from '../components/HeaderAuth';
 
 function Spa() {
+  const [checkAuth, setCheckAuth] = useState(false);
+
+  useEffect(() => {
+    console.log(checkAuth);
+  }, [checkAuth]);
+
   return (
-    <header className={styles.header}>
-      <nav className={styles.navBar}>
-        <ul className={styles.navBar_items}>
-          <li>
-            <p>Главная страница</p>
-          </li>
-          <li>
-            <p>Наши предложения</p>
-          </li>
-          <li>
-            <p>О нас</p>
-          </li>
-        </ul>
-      </nav>
-      <nav className={styles.navBar_auth}>
-        <Link to={'/login'} className={styles.link}>
-          Авторизоваться
-        </Link>
-        <Link to={'/register'} className={styles.link}>
-          Регистрация
-        </Link>
-      </nav>
-    </header>
+    <>
+      <header className={styles.header}>
+        <HeaderNav
+          styles={styles}
+          checkAuth={checkAuth}
+          setCheckAuth={setCheckAuth}
+        />
+        <HeaderAuth styles={styles} />
+      </header>
+      {checkAuth ? (
+        <Outlet />
+      ) : (
+        <h2>Чтобы просмотреть контент авторизуйтесь</h2>
+      )}
+    </>
   );
 }
 
