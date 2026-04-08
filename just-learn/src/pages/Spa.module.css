@@ -29,3 +29,8 @@
 .link:hover {
   opacity: 0.5;
 }
+
+.loading {
+  position: absolute;
+  right: 3%;
+}

@@ -1,0 +1,14 @@
+.welcome {
+  display: flex;
+  padding-top: 160px;
+}
+
+.welcome_info {
+  display: flex;
+  flex-direction: column;
+  width: 544px;
+}
+
+.welcome_info_title {
+  font-size: 42px;
+}

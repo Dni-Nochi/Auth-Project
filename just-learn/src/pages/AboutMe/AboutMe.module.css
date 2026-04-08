@@ -1,0 +1,29 @@
+.intro {
+  display: flex;
+  justify-content: space-evenly;
+  width: 1320px;
+  margin: 0 auto;
+  padding-top: 160px;
+  gap: 212px;
+}
+
+.intro_my_way {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 705px;
+  box-sizing: border-box;
+}
+
+.for_me {
+  font-size: 42px;
+}
+
+.for_me_expanded {
+  font-size: 24px;
+}
+
+.for_me_expanded_info {
+  font-size: 18px;
+  color: #bababa;
+}
