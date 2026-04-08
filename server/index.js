@@ -18,10 +18,6 @@ app.use(
 app.use(express.json());
 app.use('/auth', authRouter);
 
-app.get('/auth/users', (req, res) => {
-  res.json({ message: req.params });
-});
-
 const start = async () => {
   try {
     await mongoose.connect(MONGO_URI);

@@ -28,6 +28,7 @@ function Login() {
       }
 
       localStorage.setItem('token', data.token);
+      console.log(data);
 
       setDataAnswer(data.status);
       setTimeout(() => navigate('/'), 1000);

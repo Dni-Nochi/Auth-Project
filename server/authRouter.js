@@ -18,6 +18,7 @@ router.post(
 );
 router.post('/login', controller.login);
 router.patch('/profile', authMiddleware, controller.updateProfile);
-router.get('/users', roleMiddleware(['ADMIN']), controller.getUsers);
+router.get('/users', roleMiddleware(['ADMIN', 'USER']), controller.getUsers);
+router.get('/info', authMiddleware, controller.getUserInfo);
 
 module.exports = router;
