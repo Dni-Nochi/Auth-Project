@@ -1,0 +1,43 @@
+.header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding-top: 15px;
+}
+
+.navBar {
+  display: flex;
+}
+
+.navBar_items {
+  display: flex;
+  gap: 10px;
+}
+
+.header_links {
+  color: #d3e97a;
+}
+
+.navBar_auth {
+  position: absolute;
+  right: 2%;
+  display: flex;
+  gap: 10px;
+}
+
+.link {
+  color: #fff;
+  transition:
+    opacity 0.3s ease,
+    color 0.3s ease;
+}
+
+.link:hover {
+  color: #d3e97a;
+  opacity: 0.5;
+}
+
+.loading {
+  position: absolute;
+  right: 3%;
+}

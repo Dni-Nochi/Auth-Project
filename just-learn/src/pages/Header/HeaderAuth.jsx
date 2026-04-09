@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
+import styles from './Header.module.css';
 
-function HeaderAuth({ styles }) {
+function HeaderAuth() {
   return (
     <nav className={styles.navBar_auth}>
       <Link to={'/login'} className={styles.link}>

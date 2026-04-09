@@ -1,5 +1,7 @@
 .welcome {
   display: flex;
+  width: 1320px;
+  margin: 0 auto;
   padding-top: 160px;
 }
 
@@ -9,6 +11,58 @@
   width: 544px;
 }
 
+.welcome_info_cont {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 20px;
+}
+
 .welcome_info_title {
   font-size: 42px;
+}
+
+/* Для кнопки  */
+.for_my_link {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  padding-block: 20px;
+  padding-inline: 24px;
+  font-size: 20px;
+  color: #000;
+  border-radius: 100px;
+  background-color: #d3e97a;
+  transition: opacity 0.3s ease;
+}
+
+.for_my_link:hover {
+  opacity: 0.5;
+}
+
+.in_link_point {
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+  border-radius: 50%;
+  background-color: #000;
+}
+
+/* Для svg иконок  */
+.svg_cont {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 20px;
+}
+
+.svg_stroke {
+  padding: 8px;
+  border-radius: 50%;
+  background-color: #403e3e;
+  transition: opacity 0.3s ease;
+}
+
+.svg_stroke:hover {
+  opacity: 0.5;
 }
