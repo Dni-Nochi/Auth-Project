@@ -4,11 +4,12 @@ import { useState, useEffect } from 'react';
 import HeaderNav from './HeaderNav';
 import HeaderAuth from './HeaderAuth';
 import LoadingScrean from '../../components/LoadingScreen';
-import UserProfile from '../../components/UserProfile';
+import CustomLink from '../../components/CustomLink';
 
 function Header() {
   const [auth, setAuth] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState('');
 
   const navigate = useNavigate();
   async function fetchProfile() {
@@ -30,6 +31,7 @@ function Header() {
         throw new Error(data.message);
       }
       console.log(data);
+      setUsername(data.username);
       setAuth(true);
       setLoading(false);
     } catch (err) {
@@ -51,7 +53,9 @@ function Header() {
       {loading ? (
         <LoadingScrean styles={styles} text={'Загрузка...'} />
       ) : auth ? (
-        <UserProfile styles={styles} />
+        <CustomLink to={'/profile'} styles={styles.profile_link}>
+          {username}
+        </CustomLink>
       ) : (
         <HeaderAuth />
       )}

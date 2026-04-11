@@ -5,6 +5,7 @@ import AboutMe from '../pages/AboutMe/AboutMe';
 import Contacts from '../pages/MyContacts/Contacts';
 import Login from '../pages/Auth/Login';
 import Register from '../pages/Auth/Register';
+import Profile from '../pages/Profile/Profile';
 
 function ReactRoute() {
   return (
@@ -16,6 +17,7 @@ function ReactRoute() {
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/profile" element={<Profile />} />
     </Routes>
   );
 }

@@ -3,13 +3,18 @@ import { useState } from 'react';
 // import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import MyInput from '../../components/MyInput';
+import MyBtn from '../../components/MyBtn';
 
 function Login() {
   const navigate = useNavigate();
 
-  const [usernameF, setUsernameF] = useState('');
+  const [email, setEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [dataAnswer, setDataAnswer] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [errSignalEmail, setErrSignalEmail] = useState(false);
+  const [errSignalPassword, setErrSignalPassword] = useState(false);
 
   async function checkFetch(e) {
     e.preventDefault();
@@ -19,7 +24,7 @@ function Login() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username: usernameF, password: userPassword }),
+        body: JSON.stringify({ email: email, password: userPassword }),
       });
       const data = await response.json();
 
@@ -28,49 +33,93 @@ function Login() {
       }
 
       localStorage.setItem('token', data.token);
-      console.log(data);
 
-      setDataAnswer(data.status);
-      setTimeout(() => navigate('/'), 1000);
+      setDataAnswer(data.message);
+      setErrSignalPassword(false);
+      setTimeout(() => navigate('/'), 2000);
     } catch (err) {
-      setDataAnswer(err.message);
+      if (err.message === 'Введен неверный пароль') {
+        setPasswordError(err.message);
+        setErrSignalEmail(false);
+        setErrSignalPassword(true);
+        setEmailError('');
+      } else {
+        setEmailError(err.message);
+        setErrSignalEmail(true);
+        setPasswordError('');
+      }
+
+      console.log(err.message);
       return { message: err.message };
     }
   }
 
   return (
     <div className={styles.auth_cont}>
-      <form className={styles.auth_form}>
-        <p>Авторизоваться</p>
-        <MyInput
-          props={{
-            type: 'email',
-            placeholder: 'email',
-            autoComplete: 'username',
-            className: styles.auth_input,
-            onChange: (e) => {
-              setUsernameF(e.target.value);
-            },
-          }}
-        />
+      <div className={styles.auth_cont_left}>
+        <h2>Время приключений.</h2>
+        <h3>Время к новым возможностям.</h3>
+      </div>
+      <div className={styles.auth_cont_right}>
+        <form className={styles.auth_form}>
+          <h2>Авторизоваться</h2>
+          <div className={styles.auth_form_input_cont}>
+            <p>Ваша почта</p>
+            <MyInput
+              props={{
+                type: 'email',
+                placeholder: 'email',
+                autoComplete: 'username',
+                className: errSignalEmail
+                  ? styles.auth_input_error
+                  : styles.auth_input,
+                onChange: (e) => {
+                  setEmail(e.target.value);
+                },
+              }}
+            />
+            <p className={styles.auth_error}>{emailError}</p>
+          </div>
 
-        <MyInput
-          props={{
-            type: 'password',
-            placeholder: 'password',
-            autoComplete: 'current-password',
-            className: styles.auth_input,
-            onChange: (e) => {
-              setUserPassword(e.target.value);
-            },
-          }}
-        />
-        <Link to={'/register'} className={styles.link}>
-          Зарегистрироваться, если нет аккаунта
-        </Link>
-        {dataAnswer}
-        <button onClick={(e) => checkFetch(e)}>Проверка запроса</button>
-      </form>
+          <div className={styles.auth_form_input_cont}>
+            <p>Ваш пароль</p>
+            <MyInput
+              props={{
+                type: 'password',
+                placeholder: 'password',
+                autoComplete: 'current-password',
+                className: errSignalPassword
+                  ? styles.auth_input_error
+                  : styles.auth_input,
+                onChange: (e) => {
+                  setUserPassword(e.target.value);
+                },
+              }}
+            />
+            {errSignalPassword ? (
+              <p className={styles.auth_error}>{passwordError}</p>
+            ) : (
+              ''
+            )}
+            <p className={styles.auth_success}>{dataAnswer}</p>
+          </div>
+          <div className={styles.auth_signin}>
+            {/* <Link to={'/register'} className={styles.link}>
+              Зарегистрироваться, если нет аккаунта
+            </Link> */}
+            <p>Забыли пароль?</p>
+
+            <MyBtn
+              props={{
+                className: styles.auth_btn,
+                onClick: (e) => checkFetch(e),
+              }}
+            >
+              Проверка запроса
+            </MyBtn>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
