@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import getFetch from './authSlice';
+import tokenReducer from './tokenSlice';
 
 export default configureStore({
   reducer: {
-    auth: getFetch,
+    token: tokenReducer,
   },
 });

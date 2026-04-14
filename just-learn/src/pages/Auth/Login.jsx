@@ -62,6 +62,10 @@ function Login() {
       </div>
       <div className={styles.auth_cont_right}>
         <form className={styles.auth_form}>
+          <div className={styles.auth_cont_registr}>
+            <p>Создайте свой аккаунт</p>
+            <Link to={'/register'}>Зарегистрируйтесь</Link>
+          </div>
           <h2>Авторизоваться</h2>
           <div className={styles.auth_form_input_cont}>
             <p>Ваша почта</p>
@@ -104,11 +108,7 @@ function Login() {
             <p className={styles.auth_success}>{dataAnswer}</p>
           </div>
           <div className={styles.auth_signin}>
-            {/* <Link to={'/register'} className={styles.link}>
-              Зарегистрироваться, если нет аккаунта
-            </Link> */}
             <p>Забыли пароль?</p>
-
             <MyBtn
               props={{
                 className: styles.auth_btn,

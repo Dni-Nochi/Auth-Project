@@ -6,6 +6,17 @@
 .link:hover {
   opacity: 0.5;
 }
+/* Для регистрации */
+.auth_signup {
+  display: flex;
+  width: 90%;
+  align-items: center;
+  justify-content: start;
+  gap: 76px;
+  padding-top: 20px;
+  padding-left: 70px;
+  color: #3e7d68;
+}
 
 /* Для логина */
 
@@ -105,7 +116,7 @@
 }
 
 .auth_btn:hover {
-  opacity: 0.5;
+  opacity: 0.8;
 }
 
 .auth_signin {
@@ -122,4 +133,21 @@
 .auth_success {
   padding-top: 10px;
   padding-left: 5px;
+}
+
+.auth_cont_registr {
+  position: absolute;
+  top: -8%;
+  right: 4%;
+  display: flex;
+  gap: 20px;
+  color: #fff;
+}
+
+.auth_cont_registr a {
+  color: #3e7d68;
+  transition: color 0.4s ease;
+}
+.auth_cont_registr a:hover {
+  color: #ff4e16;
 }

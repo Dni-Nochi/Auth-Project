@@ -2,6 +2,7 @@ import styles from './Auth.module.css';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import MyInput from '../../components/MyInput';
+import MyBtn from '../../components/MyBtn';
 
 function Register() {
   const navigate = useNavigate();
@@ -45,64 +46,85 @@ function Register() {
 
   return (
     <div className={styles.auth_cont}>
-      <form className={styles.auth_form}>
-        <p>Зарегистрироваться</p>
-        <MyInput
-          props={{
-            type: 'text',
-            placeholder: 'Введите ваше имя',
-            autoComplete: 'username',
-            className: styles.auth_input,
-            onChange: (e) => {
-              setFirstname(e.target.value);
-            },
-          }}
-        />
-        <MyInput
-          props={{
-            type: 'text',
-            placeholder: 'Введите вашу фамилию',
-            autoComplete: 'username',
-            className: styles.auth_input,
-            onChange: (e) => {
-              setLastname(e.target.value);
-            },
-          }}
-        />
-        <MyInput
-          props={{
-            type: 'email',
-            placeholder: 'email',
-            autoComplete: 'username',
-            className: styles.auth_input,
-            onChange: (e) => {
-              setEmail(e.target.value);
-            },
-          }}
-        />
-        <MyInput
-          props={{
-            type: 'password',
-            placeholder: 'password',
-            autoComplete: 'current-password',
-            className: styles.auth_input,
-            onChange: (e) => {
-              setPassword(e.target.value);
-            },
-          }}
-        />
-        <Link to={'/'} className={styles.link}>
-          Главная страница
-        </Link>
-        {dataAnswer}
-        <button
-          onClick={(e) => {
-            registrationPost(e);
-          }}
-        >
-          Отправить
-        </button>
-      </form>
+      <div className={styles.auth_cont_left}>
+        <h2>Время приключений.</h2>
+        <h3>Время к новым возможностям.</h3>
+      </div>
+      <div className={styles.auth_cont_right}>
+        <form className={styles.auth_form}>
+          <p>Зарегистрироваться</p>
+          <div className={styles.auth_form_input_cont}>
+            <p>Введите имя</p>
+            <MyInput
+              props={{
+                type: 'text',
+                placeholder: 'Введите ваше имя',
+                autoComplete: 'username',
+                className: styles.auth_input,
+                onChange: (e) => {
+                  setFirstname(e.target.value);
+                },
+              }}
+            />
+          </div>
+          <div className={styles.auth_form_input_cont}>
+            <p>Введите фамилию</p>
+            <MyInput
+              props={{
+                type: 'text',
+                placeholder: 'Введите вашу фамилию',
+                autoComplete: 'username',
+                className: styles.auth_input,
+                onChange: (e) => {
+                  setLastname(e.target.value);
+                },
+              }}
+            />
+          </div>
+          <div className={styles.auth_form_input_cont}>
+            <p>Введите почту</p>
+            <MyInput
+              props={{
+                type: 'email',
+                placeholder: 'email',
+                autoComplete: 'username',
+                className: styles.auth_input,
+                onChange: (e) => {
+                  setEmail(e.target.value);
+                },
+              }}
+            />
+          </div>
+          <div className={styles.auth_form_input_cont}>
+            <p>Введите пароль</p>
+            <MyInput
+              props={{
+                type: 'password',
+                placeholder: 'password',
+                autoComplete: 'current-password',
+                className: styles.auth_input,
+                onChange: (e) => {
+                  setPassword(e.target.value);
+                },
+              }}
+            />
+          </div>
+          {dataAnswer}
+          <div className={styles.auth_signup}>
+            <Link to={'/'} className={styles.link}>
+              Главная страница
+            </Link>
+            <MyBtn
+              props={{
+                className: styles.auth_btn,
+                onClick: (e) => registrationPost(e),
+              }}
+            >
+              Проверка запроса
+            </MyBtn>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

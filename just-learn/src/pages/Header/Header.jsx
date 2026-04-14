@@ -1,5 +1,4 @@
 import styles from './Header.module.css';
-import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import HeaderNav from './HeaderNav';
 import HeaderAuth from './HeaderAuth';
@@ -11,15 +10,9 @@ function Header() {
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState('');
 
-  const navigate = useNavigate();
   async function fetchProfile() {
     try {
       const token = localStorage.getItem('token');
-
-      if (!token) {
-        navigate('/login');
-        return;
-      }
 
       const response = await fetch('http://localhost:5000/auth/info', {
         headers: { Authorization: `Bearer ${token}` },
@@ -31,12 +24,11 @@ function Header() {
         throw new Error(data.message);
       }
       console.log(data);
-      setUsername(data.username);
+      setUsername(data.firstname);
       setAuth(true);
       setLoading(false);
     } catch (err) {
       localStorage.removeItem('token');
-      navigate('/login');
       console.log(err.message);
       setAuth(false);
     } finally {
