@@ -1,11 +1,13 @@
 import styles from './Auth.module.css';
 import { useState } from 'react';
-// import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { setToken } from '../../store/tokenSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import MyInput from '../../components/MyInput';
 import MyBtn from '../../components/MyBtn';
 
 function Login() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -33,9 +35,11 @@ function Login() {
       }
 
       localStorage.setItem('token', data.token);
+      dispatch(setToken(data.token));
 
       setDataAnswer(data.message);
       setErrSignalPassword(false);
+      setEmailError('');
       setTimeout(() => navigate('/'), 2000);
     } catch (err) {
       if (err.message === 'Введен неверный пароль') {
