@@ -2,39 +2,69 @@
   position: relative;
   display: flex;
   justify-content: center;
-  padding-top: 15px;
+  align-items: center;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  background-color: #18261f;
 }
 
+.header_structure {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 1320px;
+  margin: 0 auto;
+}
 .navBar {
   display: flex;
 }
 
 .navBar_items {
   display: flex;
-  gap: 10px;
-}
-
-.header_links {
-  color: #d3e97a;
+  gap: 25px;
 }
 
 .navBar_auth {
-  position: absolute;
-  right: 3%;
   display: flex;
-  gap: 10px;
+  gap: 12px;
+}
+
+.header_links {
+  color: #fff;
 }
 
 .link {
   color: #fff;
-  transition:
-    opacity 0.3s ease,
-    color 0.3s ease;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
 }
 
 .link:hover {
-  color: #d3e97a;
-  opacity: 0.5;
+  opacity: 1;
+}
+
+.project_name {
+  color: #7cbf8f;
+  transition: color 0.3s ease;
+}
+.project_name:hover {
+  color: #fff;
+}
+
+.auth_link {
+  padding: 10px 15px 10px 15px;
+  color: #7cbf8f;
+  border: 2px solid #7cbf8f;
+  border-radius: 20px;
+  background-color: inherit;
+  transition:
+    color 0.4s ease,
+    background-color 0.4s ease;
+}
+
+.auth_link:hover {
+  color: #163f2f;
+  background-color: #7cbf8f;
 }
 
 .profile_link {

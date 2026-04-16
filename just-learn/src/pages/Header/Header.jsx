@@ -7,8 +7,13 @@ import CustomLink from '../../components/CustomLink';
 function Header() {
   return (
     <header className={styles.header}>
-      <HeaderNav />
-      <HeaderAuth />
+      <div className={styles.header_structure}>
+        <CustomLink to={'/'} styles={styles.project_name}>
+          <h1>CV.com</h1>
+        </CustomLink>
+        <HeaderNav />
+        <HeaderAuth />
+      </div>
     </header>
   );
 }

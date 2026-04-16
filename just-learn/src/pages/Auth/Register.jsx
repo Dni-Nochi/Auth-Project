@@ -47,8 +47,23 @@ function Register() {
   return (
     <div className={styles.auth_cont}>
       <div className={styles.auth_cont_left}>
-        <h2>Время приключений.</h2>
-        <h3>Время к новым возможностям.</h3>
+        <div className={styles.auth_left_info}>
+          <h2>Приветствую на сайт возможносетей, CV.com</h2>
+          <p>
+            Данный сайт является моим pet-проектом, в котором я практикую React,
+            Redux Toolkit, React Router DOM, а также взаимодействие между
+            сервером и клиентом.
+          </p>
+        </div>
+        <div>
+          <p>
+            Суть проекта: после авторизации вы заходите в профиль своего
+            аккаунта и заполняете данные для их отображения на сайте. Сайт
+            представляет собой сборник проектов с кратким описанием и визуальным
+            превью - удобно использовать на собеседовании. Все проекты
+            подтягиваются с GitHub пользователя.
+          </p>
+        </div>
       </div>
       <div className={styles.auth_cont_right}>
         <form className={styles.auth_form}>

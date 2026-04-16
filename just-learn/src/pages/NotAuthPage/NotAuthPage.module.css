@@ -1,0 +1,28 @@
+.bottom_line {
+  border-bottom: 2px solid #314e40;
+}
+.info_cont {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 1320px;
+  margin: 0 auto;
+  padding-top: 160px;
+  padding-bottom: 160px;
+}
+
+.info {
+  width: 50%;
+  letter-spacing: 0.5px;
+  word-spacing: 0.5px;
+}
+
+.info_title {
+  padding-bottom: 15px;
+}
+
+.info_essence {
+  width: 50%;
+  letter-spacing: 0.5px;
+  word-spacing: 0.5px;
+}

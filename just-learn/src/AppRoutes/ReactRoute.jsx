@@ -25,7 +25,7 @@ function ReactRoute() {
   return (
     <Routes>
       <Route path="/" element={<Spa />}>
-        <Route index element={auth ? <MainPage /> : <NotAuthPage />} />
+        <Route index element={<MainPage />} />
         <Route path="about_me" element={<AboutMe />} />
         <Route path="contacts" element={<Contacts />} />
       </Route>

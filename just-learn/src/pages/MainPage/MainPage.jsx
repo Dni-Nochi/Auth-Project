@@ -7,36 +7,39 @@ function MainPage() {
     <section className={styles.welcome}>
       <div className={styles.welcome_info}>
         <div className={styles.welcome_info_cont}>
-          <h1 className={styles.welcome_info_title}>Привет, я Адилов Тимур.</h1>
-          <p>
+          <p className={styles.welcome_job}>Frontend разработчик</p>
+          <h2 className={styles.welcome_info_title}>
+            Привет, я <br />
+            <span className={styles.user_name}>Адилов Тимур.</span>
+          </h2>
+          <p className={styles.user_info}>
             Развиваюсь в сфере frontend-разработки и активно изучаю новые для
             себя технологии
           </p>
         </div>
-        <div className={styles.svg_cont}>
+        <div className={styles.links}>
           <CustomLink to={'contacts'} styles={styles.for_my_link}>
             Мои контакты
-            <div className={styles.in_link_point}></div>
           </CustomLink>
-          <a
-            href="https://www.linkedin.com/in/%D1%82%D0%B8%D0%BC%D1%83%D1%80-%D0%B0%D0%B4%D0%B8%D0%BB%D0%BE%D0%B2-920684344/"
-            target="_blank"
-          >
-            <SVG
-              id={'linkedin'}
-              width={26}
-              height={26}
-              svgStyles={styles.svg_stroke}
-            />
-          </a>
-          <a href="https://github.com/Dni-Nochi" target="_blank">
-            <SVG
-              id={'github'}
-              width={26}
-              height={26}
-              svgStyles={styles.svg_stroke}
-            />
-          </a>
+          <CustomLink to={'about_me'} styles={styles.for_my_link}>
+            Обо мне
+          </CustomLink>
+        </div>
+      </div>
+      <div className={styles.welcome_right}>
+        <h2 className={styles.welcome_initials}>АТ</h2>
+        <h3>Адилов Тимур</h3>
+        <p>Frontend React</p>
+        <span className={styles.welcome_line}></span>
+        <div className={styles.welcome_exp}>
+          <div className={styles.welcome_exp_}>
+            <p>3+</p>
+            <span>проекта</span>
+          </div>
+          <div className={styles.welcome_exp_}>
+            <p>2+</p>
+            <span>года</span>
+          </div>
         </div>
       </div>
     </section>

@@ -1,5 +1,6 @@
 .welcome {
   display: flex;
+  justify-content: space-around;
   width: 1320px;
   margin: 0 auto;
   padding-top: 160px;
@@ -8,31 +9,97 @@
 .welcome_info {
   display: flex;
   flex-direction: column;
-  width: 544px;
+  width: 600px;
 }
 
 .welcome_info_cont {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
   padding-bottom: 20px;
+}
+
+.welcome_job {
+  position: relative;
+  width: fit-content;
+  padding: 8px 15px 8px 30px;
+  border-radius: 30px;
+  background-color: #2a4738;
+  transition: all 0.3s ease;
+}
+
+.welcome_job::before {
+  position: absolute;
+  top: 50%;
+  left: 6%;
+  transform: translateY(-50%);
+  display: block;
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #4cae7d;
+}
+
+.welcome_job:hover {
+  cursor: default;
+  transform: scale(1.1);
 }
 
 .welcome_info_title {
   font-size: 42px;
 }
 
+.welcome_right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 340px;
+  height: 303px;
+  padding-top: 30px;
+  border: 1px solid #455f52;
+  box-sizing: border-box;
+  border-radius: 25px;
+  background-color: #2a4738;
+}
+
+.welcome_initials {
+  padding: 25px;
+  border-radius: 50%;
+  background-color: #2f7f53;
+}
+
+.welcome_line {
+  width: 80%;
+  border: 1px solid #3f5a4c;
+}
+
+.welcome_exp {
+  display: flex;
+  gap: 15px;
+}
+
+.welcome_exp_ {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.welcome_exp_ span {
+  color: #8b9c94;
+}
 /* Для кнопки  */
 .for_my_link {
   display: flex;
   align-items: center;
   gap: 25px;
-  padding-block: 20px;
-  padding-inline: 24px;
+  padding-block: 12px;
+  padding-inline: 20px;
   font-size: 20px;
-  color: #000;
-  border-radius: 100px;
-  background-color: #d3e97a;
+  color: #fff;
+  border-radius: 14px;
+  background-color: #2f7f53;
   transition: opacity 0.3s ease;
 }
 
@@ -48,21 +115,18 @@
   background-color: #000;
 }
 
-/* Для svg иконок  */
-.svg_cont {
+/* Разное  */
+.links {
   display: flex;
   align-items: center;
   gap: 10px;
   padding-top: 20px;
 }
 
-.svg_stroke {
-  padding: 8px;
-  border-radius: 50%;
-  background-color: #403e3e;
-  transition: opacity 0.3s ease;
+.user_name {
+  color: #7cbf8f;
 }
 
-.svg_stroke:hover {
-  opacity: 0.5;
+.user_info {
+  color: #8b9c94;
 }
