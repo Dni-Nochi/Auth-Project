@@ -15,18 +15,42 @@ class AuthController {
   async registration(req, res) {
     try {
       const errors = validationResult(req);
+      const { firstname, lastname, email, password, gitHubUrl } = req.body;
+
       if (!errors.isEmpty()) {
+        return res.status(400).json({ message: errors.array(), errors });
+      }
+
+      if (!firstname || firstname.trim() === '') {
         return res
           .status(400)
-          .json({ message: 'Ошибка при регистрации', errors });
+          .json({ message: 'Поле имени не может быть пустым' });
       }
-      const { firstname, lastname, email, password, gitHubUrl } = req.body;
+
+      if (!lastname || firstname.trim() === '') {
+        return res
+          .status(400)
+          .json({ message: 'Поле фамилии не может быть пустым' });
+      }
+
       const candidate = await User.findOne({ email });
       if (candidate) {
+        return res.status(400).json({
+          message: 'Пользователь с такой почтой уже существует',
+          candidate,
+        });
+      }
+      // else if (!candidate) {
+      //   return res.status(400).json({
+      //     message: `Поле с почтой не должно быть пустым`,
+      //   });
+      // }
+      if (!password || password.trim() === '') {
         return res
           .status(400)
-          .json({ message: 'Польлзователь с такой почтой уже существует' });
+          .json({ message: 'Пароль должен быть больше 4 и меньше 14' });
       }
+
       const hashPassword = bcrypt.hashSync(password, 7);
       const user = new User({
         firstname,
@@ -35,6 +59,7 @@ class AuthController {
         password: hashPassword,
         gitHubUrl,
       });
+
       await user.save();
       return res.json({ message: 'Пользователь успешно зарегистрирован' });
     } catch (e) {

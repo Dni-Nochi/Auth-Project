@@ -1,5 +1,5 @@
-function LoadingScrean({ text, styles }) {
-  return <p className={styles.loading}>{text}</p>;
+function LoadingScrean({ text, className }) {
+  return <p className={className.loading}>{text}</p>;
 }
 
 export default LoadingScrean;

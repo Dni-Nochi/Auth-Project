@@ -1,8 +1,19 @@
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setToken } from '../../store/tokenSlice';
 import CustomLink from '../../components/CustomLink';
-import SVG from '../../components/SVG';
 import styles from './MainPage.module.css';
 
 function MainPage() {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.token.tokenValue);
+
+  useEffect(() => {
+    const tokenSaved = localStorage.getItem('token');
+    if (tokenSaved && !token) {
+      dispatch(setToken(tokenSaved));
+    }
+  }, []);
   return (
     <section className={styles.welcome}>
       <div className={styles.welcome_info}>
@@ -18,10 +29,16 @@ function MainPage() {
           </p>
         </div>
         <div className={styles.links}>
-          <CustomLink to={'contacts'} styles={styles.for_my_link}>
+          <CustomLink
+            to={token ? 'contacts' : '/login'}
+            className={styles.for_my_link}
+          >
             Мои контакты
           </CustomLink>
-          <CustomLink to={'about_me'} styles={styles.for_my_link}>
+          <CustomLink
+            to={token ? 'about_me' : '/login'}
+            className={styles.for_my_link}
+          >
             Обо мне
           </CustomLink>
         </div>

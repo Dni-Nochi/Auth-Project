@@ -135,7 +135,7 @@ function Register() {
                 onClick: (e) => registrationPost(e),
               }}
             >
-              Проверка запроса
+              Зарегистрироваться
             </MyBtn>
           </div>
         </form>

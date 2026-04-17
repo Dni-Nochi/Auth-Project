@@ -11,12 +11,10 @@ function Login() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
-  const [userPassword, setUserPassword] = useState('');
-  const [dataAnswer, setDataAnswer] = useState('');
+  const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [errSignalEmail, setErrSignalEmail] = useState(false);
-  const [errSignalPassword, setErrSignalPassword] = useState(false);
+  const [dataAnswer, setDataAnswer] = useState('');
 
   async function checkFetch(e) {
     e.preventDefault();
@@ -26,7 +24,7 @@ function Login() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: email, password: userPassword }),
+        body: JSON.stringify({ email: email, password: password }),
       });
       const data = await response.json();
 
@@ -37,19 +35,16 @@ function Login() {
       localStorage.setItem('token', data.token);
       dispatch(setToken(data.token));
 
-      setDataAnswer(data.message);
-      setErrSignalPassword(false);
       setEmailError('');
+      setPasswordError('');
+      setDataAnswer(data.message);
       setTimeout(() => navigate('/'), 2000);
     } catch (err) {
       if (err.message === 'Введен неверный пароль') {
         setPasswordError(err.message);
-        setErrSignalEmail(false);
-        setErrSignalPassword(true);
         setEmailError('');
       } else {
         setEmailError(err.message);
-        setErrSignalEmail(true);
         setPasswordError('');
       }
 
@@ -78,7 +73,7 @@ function Login() {
                 type: 'email',
                 placeholder: 'email',
                 autoComplete: 'username',
-                className: errSignalEmail
+                className: emailError
                   ? styles.auth_input_error
                   : styles.auth_input,
                 onChange: (e) => {
@@ -96,19 +91,15 @@ function Login() {
                 type: 'password',
                 placeholder: 'password',
                 autoComplete: 'current-password',
-                className: errSignalPassword
+                className: passwordError
                   ? styles.auth_input_error
                   : styles.auth_input,
                 onChange: (e) => {
-                  setUserPassword(e.target.value);
+                  setPassword(e.target.value);
                 },
               }}
             />
-            {errSignalPassword ? (
-              <p className={styles.auth_error}>{passwordError}</p>
-            ) : (
-              ''
-            )}
+            <p className={styles.auth_error}>{passwordError}</p>
             <p className={styles.auth_success}>{dataAnswer}</p>
           </div>
           <div className={styles.auth_signin}>
@@ -119,7 +110,7 @@ function Login() {
                 onClick: (e) => checkFetch(e),
               }}
             >
-              Проверка запроса
+              Войти
             </MyBtn>
           </div>
         </form>

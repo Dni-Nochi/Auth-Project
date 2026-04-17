@@ -28,10 +28,10 @@ function ReactRoute() {
         <Route index element={<MainPage />} />
         <Route path="about_me" element={<AboutMe />} />
         <Route path="contacts" element={<Contacts />} />
+        <Route path="profile" element={<Profile />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/profile" element={<Profile />} />
     </Routes>
   );
 }

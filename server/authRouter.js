@@ -11,8 +11,8 @@ router.post(
     check('email', 'Почта пользователя не может быть пустой').notEmpty(),
     check(
       'password',
-      'Длина пароля должена быть больше 4 и менньше 10',
-    ).isLength({ min: 4, max: 10 }),
+      'Длина пароля должена быть больше 4 и менньше 14',
+    ).isLength({ min: 4, max: 14 }),
   ],
   controller.registration,
 );

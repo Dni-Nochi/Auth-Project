@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 
-function CustomLink({ to, children, styles }) {
+function CustomLink({ to, children, className }) {
   return (
-    <Link to={to} className={styles}>
+    <Link to={to} className={className}>
       {children}
     </Link>
   );

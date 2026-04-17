@@ -8,7 +8,7 @@ function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.header_structure}>
-        <CustomLink to={'/'} styles={styles.project_name}>
+        <CustomLink to={'/'} className={styles.project_name}>
           <h1>CV.com</h1>
         </CustomLink>
         <HeaderNav />
