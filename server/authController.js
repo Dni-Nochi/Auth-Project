@@ -15,40 +15,30 @@ class AuthController {
   async registration(req, res) {
     try {
       const errors = validationResult(req);
-      const { firstname, lastname, email, password, gitHubUrl } = req.body;
-
       if (!errors.isEmpty()) {
-        return res.status(400).json({ message: errors.array(), errors });
-      }
-
-      if (!firstname || firstname.trim() === '') {
-        return res
-          .status(400)
-          .json({ message: 'Поле имени не может быть пустым' });
-      }
-
-      if (!lastname || firstname.trim() === '') {
-        return res
-          .status(400)
-          .json({ message: 'Поле фамилии не может быть пустым' });
-      }
-
-      const candidate = await User.findOne({ email });
-      if (candidate) {
+        const error = errors.array()[0];
         return res.status(400).json({
-          message: 'Пользователь с такой почтой уже существует',
-          candidate,
+          message: error.msg,
+          field: error.path,
         });
       }
-      // else if (!candidate) {
-      //   return res.status(400).json({
-      //     message: `Поле с почтой не должно быть пустым`,
-      //   });
-      // }
-      if (!password || password.trim() === '') {
-        return res
-          .status(400)
-          .json({ message: 'Пароль должен быть больше 4 и меньше 14' });
+
+      const { firstname, lastname, email, password, gitHubUrl } = req.body;
+
+      const candidate = await User.findOne({ email });
+      const validate = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+      if (!validate) {
+        return res.status(400).json({
+          message: 'Проверьте знаки "@" и "."',
+          field: 'email',
+        });
+      }
+      if (candidate) {
+        return res.status(400).json({
+          message: 'Пользователь c такой почтой уже существует',
+          field: 'email',
+        });
       }
 
       const hashPassword = bcrypt.hashSync(password, 7);
@@ -64,7 +54,7 @@ class AuthController {
       return res.json({ message: 'Пользователь успешно зарегистрирован' });
     } catch (e) {
       console.log(e);
-      res.status(400).json({ message: 'Ошибка при регистрации', e });
+      res.status(400).json({ message: 'Ошибка при регистрации' });
     }
   }
   async login(req, res) {
@@ -96,7 +86,9 @@ class AuthController {
       return res.json(user);
     } catch (e) {
       console.log(e);
-      res.status(400).json({ message: 'Что по чем, ошибка' });
+      res
+        .status(400)
+        .json({ message: 'Ошибка при получении данных пользователя' });
     }
   }
   async updateProfile(req, res) {

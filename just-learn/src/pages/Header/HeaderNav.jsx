@@ -1,23 +1,12 @@
 import styles from './Header.module.css';
-import { useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { setToken } from '../../store/tokenSlice';
+import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function HeaderNav() {
-  const dispatch = useDispatch();
   const token = useSelector((state) => state.token.tokenValue);
-  console.log(token);
   const setActive = ({ isActive }) =>
-    isActive ? styles.header_links : styles.link;
+    isActive ? styles.header_active_links : styles.not_active_link;
 
-  useEffect(() => {
-    const savedToken = localStorage.getItem('token');
-    if (savedToken && !token) {
-      dispatch(setToken(savedToken));
-      console.log(token);
-    }
-  }, []);
   return (
     <nav className={styles.navBar}>
       <ul className={styles.navBar_items}>

@@ -1,10 +1,9 @@
-import { Link } from 'react-router';
+import styles from './Profile.module.css';
 
 function Profile() {
   return (
     <div>
       <p>Тут страница пользователя </p>
-      <Link to={'/'}>Главная страница</Link>
     </div>
   );
 }

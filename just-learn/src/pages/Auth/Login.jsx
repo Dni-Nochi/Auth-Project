@@ -40,12 +40,12 @@ function Login() {
       setDataAnswer(data.message);
       setTimeout(() => navigate('/'), 2000);
     } catch (err) {
+      setEmailError('');
+      setPasswordError('');
       if (err.message === 'Введен неверный пароль') {
         setPasswordError(err.message);
-        setEmailError('');
       } else {
         setEmailError(err.message);
-        setPasswordError('');
       }
 
       console.log(err.message);

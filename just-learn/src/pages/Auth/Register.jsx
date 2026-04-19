@@ -10,6 +10,10 @@ function Register() {
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [firstnameError, setFirstnameError] = useState('');
+  const [lastnameError, setLastnameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const [dataAnswer, setDataAnswer] = useState('');
 
   async function registrationPost(e) {
@@ -31,16 +35,31 @@ function Register() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message);
+        throw data;
       }
 
-      console.log(data);
-
+      setFirstnameError('');
+      setLastnameError('');
+      setEmailError('');
+      setPasswordError('');
       setDataAnswer(data.message);
-      setTimeout(() => navigate('/login'), 1000);
+      setTimeout(() => navigate('/login'), 2000);
     } catch (err) {
-      setDataAnswer(err.message);
-      return { message: err.message };
+      console.log(err);
+      setFirstnameError('');
+      setLastnameError('');
+      setEmailError('');
+      setPasswordError('');
+
+      const setters = {
+        firstname: setFirstnameError,
+        lastname: setLastnameError,
+        email: setEmailError,
+        password: setPasswordError,
+      };
+      if (err.field && setters[err.field]) {
+        setters[err.field](err.message);
+      }
     }
   }
 
@@ -48,7 +67,7 @@ function Register() {
     <div className={styles.auth_cont}>
       <div className={styles.auth_cont_left}>
         <div className={styles.auth_left_info}>
-          <h2>Приветствую на сайт возможносетей, CV.com</h2>
+          <h2>Добро пожаловать на сайт возможностей, CV.com</h2>
           <p>
             Данный сайт является моим pet-проектом, в котором я практикую React,
             Redux Toolkit, React Router DOM, а также взаимодействие между
@@ -74,13 +93,18 @@ function Register() {
               props={{
                 type: 'text',
                 placeholder: 'Введите ваше имя',
-                autoComplete: 'username',
-                className: styles.auth_input,
+                autoComplete: 'given-name',
+                className: firstnameError
+                  ? styles.auth_input_error
+                  : styles.auth_input,
                 onChange: (e) => {
                   setFirstname(e.target.value);
                 },
               }}
             />
+            {firstnameError && (
+              <p className={styles.auth_error}>{firstnameError}</p>
+            )}
           </div>
           <div className={styles.auth_form_input_cont}>
             <p>Введите фамилию</p>
@@ -88,13 +112,18 @@ function Register() {
               props={{
                 type: 'text',
                 placeholder: 'Введите вашу фамилию',
-                autoComplete: 'username',
-                className: styles.auth_input,
+                autoComplete: 'family-name',
+                className: lastnameError
+                  ? styles.auth_input_error
+                  : styles.auth_input,
                 onChange: (e) => {
                   setLastname(e.target.value);
                 },
               }}
             />
+            {lastnameError && (
+              <p className={styles.auth_error}>{lastnameError}</p>
+            )}
           </div>
           <div className={styles.auth_form_input_cont}>
             <p>Введите почту</p>
@@ -102,13 +131,16 @@ function Register() {
               props={{
                 type: 'email',
                 placeholder: 'email',
-                autoComplete: 'username',
-                className: styles.auth_input,
+                autoComplete: 'email',
+                className: emailError
+                  ? styles.auth_input_error
+                  : styles.auth_input,
                 onChange: (e) => {
                   setEmail(e.target.value);
                 },
               }}
             />
+            {emailError && <p className={styles.auth_error}>{emailError}</p>}
           </div>
           <div className={styles.auth_form_input_cont}>
             <p>Введите пароль</p>
@@ -117,14 +149,19 @@ function Register() {
                 type: 'password',
                 placeholder: 'password',
                 autoComplete: 'current-password',
-                className: styles.auth_input,
+                className: passwordError
+                  ? styles.auth_input_error
+                  : styles.auth_input,
                 onChange: (e) => {
                   setPassword(e.target.value);
                 },
               }}
             />
+            {passwordError && (
+              <p className={styles.auth_error}>{passwordError}</p>
+            )}
           </div>
-          {dataAnswer}
+          {dataAnswer && <p className={styles.auth_success}>{dataAnswer}</p>}
           <div className={styles.auth_signup}>
             <Link to={'/'} className={styles.link}>
               Главная страница

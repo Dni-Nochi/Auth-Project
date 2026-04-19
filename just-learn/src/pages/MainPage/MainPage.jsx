@@ -1,19 +1,10 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setToken } from '../../store/tokenSlice';
-import CustomLink from '../../components/CustomLink';
 import styles from './MainPage.module.css';
+import CustomLink from '../../components/CustomLink';
+import { useSelector } from 'react-redux';
 
 function MainPage() {
-  const dispatch = useDispatch();
   const token = useSelector((state) => state.token.tokenValue);
 
-  useEffect(() => {
-    const tokenSaved = localStorage.getItem('token');
-    if (tokenSaved && !token) {
-      dispatch(setToken(tokenSaved));
-    }
-  }, []);
   return (
     <section className={styles.welcome}>
       <div className={styles.welcome_info}>
@@ -44,7 +35,7 @@ function MainPage() {
         </div>
       </div>
       <div className={styles.welcome_right}>
-        <h2 className={styles.welcome_initials}>АТ</h2>
+        <p className={styles.welcome_initials}>АТ</p>
         <h3>Адилов Тимур</h3>
         <p>Frontend React</p>
         <span className={styles.welcome_line}></span>
