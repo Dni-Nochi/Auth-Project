@@ -6,6 +6,14 @@ const User = new Schema({
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
   gitHubUrl: { type: String },
+  linkedinUrl: { type: String },
+  headHunterUrl: { type: String },
+  userLearn: { type: Number },
+  userExperience: { type: Number },
+  userProfession: { type: String },
+  userCity: { type: String },
+  userBiography: { type: String },
+  userStack: { type: Array },
 });
 
 module.exports = model('User', User);

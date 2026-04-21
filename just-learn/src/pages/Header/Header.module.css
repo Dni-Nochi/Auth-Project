@@ -31,6 +31,8 @@
 
 .profile {
   padding: 10px 25px 10px 25px;
+  color: #fff;
+  border: 2px solid #7cbf8f;
   border-radius: 12px;
   background-color: #2f7f53;
   box-sizing: border-box;
@@ -39,10 +41,11 @@
 .not_active_profile {
   padding: 10px 25px 10px 25px;
   color: #fff;
+  border: 2px solid #7cbf8f;
   border-radius: 12px;
-  background-color: #2f7f53;
+  background-color: inherit;
   box-sizing: border-box;
-  opacity: 0.5;
+  opacity: 0.6;
   transition: opacity 0.3s ease;
 }
 
@@ -88,15 +91,10 @@
   background-color: #7cbf8f;
 }
 
-.profile {
+.loading {
   padding: 10px 25px 10px 25px;
   color: #fff;
   box-sizing: border-box;
-  border: 1px solid #3e7d68;
+  border: 2px solid #7cbf8f;
   border-radius: 12px;
-}
-
-.loading {
-  position: absolute;
-  right: 3%;
 }

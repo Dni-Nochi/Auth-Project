@@ -93,16 +93,38 @@ class AuthController {
   }
   async updateProfile(req, res) {
     try {
-      const { gitHubUrl } = req.body;
+      const {
+        gitHubUrl,
+        linkedinUrl,
+        headHunterUrl,
+        userLearn,
+        userExperience,
+        userProfession,
+        userCity,
+        userBiography,
+        userStack,
+      } = req.body;
       const userId = req.user.id;
 
       const updatedUser = await User.findByIdAndUpdate(
         userId,
-        { gitHubUrl },
+        {
+          $set: {
+            gitHubUrl,
+            linkedinUrl,
+            headHunterUrl,
+            userLearn,
+            userExperience,
+            userProfession,
+            userCity,
+            userBiography,
+            userStack,
+          },
+        },
         { new: true },
       ).select('-password');
 
-      return res.json(updatedUser);
+      return res.json({ updatedUser, message: 'Успешно обновлено' });
     } catch (e) {
       console.log(e);
       res.status(400).json({ message: 'Ошибка при обновлении профиля' });
