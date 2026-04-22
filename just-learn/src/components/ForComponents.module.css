@@ -6,3 +6,15 @@
   border-radius: 30px;
   background-color: #2a4534;
 }
+
+.profile_short_info {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile_short_info_avatar {
+  padding: 25px;
+  box-sizing: border-box;
+  background-color: #6fcf8a;
+  border-radius: 50%;
+}

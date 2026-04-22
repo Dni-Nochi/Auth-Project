@@ -1,20 +1,55 @@
 import styles from './Profile.module.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import UserSkills from '../../components/UserSkills';
+import ProfileLeftSideDes from '../../components/ProfileLeftSideDes';
 
 function Profile() {
   const token = useSelector((state) => state.token.tokenValue);
+  const [redact, setRedact] = useState(false);
   const [stackActive, setStackActive] = useState(false);
-  const [stack, setStack] = useState('');
-  const [skills, setSkills] = useState([]);
+  const [stack, setStack] = useState([]);
+  const [inputValue, setInputValue] = useState('');
+  const [profession, setProfession] = useState('');
+  const [city, setCity] = useState('');
+  const [biography, setBiography] = useState('');
+  const [dataMessage, setDataMessage] = useState('');
 
-  function createSkill() {
-    if (stack.trim()) {
-      setSkills([...skills, stack]);
-      setStack('');
+  function rotateRedact() {
+    setRedact(!redact);
+  }
+
+  async function getUserInfo() {
+    try {
+      const response = await fetch('http://localhost:5000/auth/info', {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw data;
+      }
+      console.log(data);
+      setStack(data.userStack);
+      setProfession(data.userProfession);
+      setCity(data.userCity);
+      setBiography(data.userBiography);
+    } catch (err) {
+      console.log(err, token);
     }
   }
+
+  function createSkill() {
+    if (inputValue.trim()) {
+      setStack([
+        ...stack,
+        { value: inputValue, id: Date.now() + Math.random() },
+      ]);
+      setInputValue('');
+    }
+  }
+
   async function userUpdateRequest() {
     try {
       const response = await fetch('http://localhost:5000/auth/profile', {
@@ -23,7 +58,12 @@ function Profile() {
           'Content-Type': 'application/json; charset=UTF-8',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ userStack: skills }),
+        body: JSON.stringify({
+          userStack: stack,
+          userProfession: profession,
+          userCity: city,
+          userBiography: biography,
+        }),
       });
       const data = await response.json();
 
@@ -31,23 +71,29 @@ function Profile() {
         throw data;
       }
 
-      console.log(data);
+      console.log(data.message, token);
+      setDataMessage(data.message);
+      if (data.message) {
+        setTimeout(() => {
+          setDataMessage('');
+        }, 1500);
+      }
     } catch (err) {
       console.log(err);
+      setDataMessage(err.message);
     }
   }
+
+  useEffect(() => {
+    if (token) {
+      getUserInfo();
+    }
+  }, [token]);
   return (
     <section className={styles.profile_cont}>
-      <div>
-        <p>Расскажите о своей профессии </p>
-        <div className={styles.profile_get_info}>
-          <input placeholder="Ваша позиция" />
-          <input placeholder="Ваш стек" />
-          <input placeholder="Опишите свой рабочий опыт" />
-        </div>
-      </div>
+      <ProfileLeftSideDes />
 
-      <div className={styles.profile_main}>
+      <div className={redact ? styles.profile_main_focus : styles.profile_main}>
         <div className={styles.profile_main_title}>
           <p>Основная информация</p>
           <p className={styles.profile_prof}>Профессия</p>
@@ -57,14 +103,22 @@ function Profile() {
             <p>Позиция</p>
             <input
               className={styles.profile_input}
+              value={profession || ''}
               placeholder="Впишите свою позицию"
+              onChange={(e) => setProfession(e.target.value)}
+              disabled={!redact}
             />
           </div>
           <div className={styles.profile_input_cont}>
             <p>Город</p>
             <input
               className={styles.profile_input}
+              value={city || ''}
               placeholder="Впишите ваш город"
+              onChange={(e) => {
+                setCity(e.target.value);
+              }}
+              disabled={!redact}
             />
           </div>
         </div>
@@ -72,54 +126,70 @@ function Profile() {
           <p>О себе</p>
           <textarea
             className={styles.profile_aboutme_input}
+            value={biography || ''}
             placeholder="Расскажите про себя"
+            onChange={(e) => setBiography(e.target.value)}
+            disabled={!redact}
           ></textarea>
         </div>
         <div>
           <p>Стек технологий</p>
-          <div>
-            {skills.map((skill, index) => {
-              return <UserSkills key={index}>{skill}</UserSkills>;
+          <div className={styles.profile_stack}>
+            {stack.map((skill) => {
+              return (
+                <UserSkills className={styles.user_Skill} key={skill.id}>
+                  {skill.value}
+                </UserSkills>
+              );
             })}
           </div>
           <div>
             <button
               onClick={() => {
                 setStackActive(!stackActive);
-                console.log(stackActive);
               }}
               className={styles.profile_create_user_skill}
+              disabled={!redact}
             >
               + добавить
             </button>
             <input
               placeholder="Ваш стек..."
               className={
-                stackActive
+                stackActive && redact
                   ? styles.profile_create_skill
                   : styles.profile_create_skill_no
               }
-              onChange={(e) => setStack(e.target.value)}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && createSkill()}
+              disabled={!redact}
             />
           </div>
+          <p>{dataMessage}</p>
         </div>
-        <button
-          className={styles.profile_save}
-          onClick={() => userUpdateRequest()}
-        >
-          Сохранить
-        </button>
+        <div className={styles.profile_redact_cont}>
+          {redact ? (
+            <div className={styles.profile_redact_save}>
+              <button className={styles.profile_save} onClick={rotateRedact}>
+                Отменить
+              </button>
+              <button
+                className={styles.profile_save}
+                onClick={() => userUpdateRequest()}
+              >
+                Сохранить
+              </button>
+            </div>
+          ) : (
+            <button className={styles.profile_save} onClick={rotateRedact}>
+              Изменить
+            </button>
+          )}
+        </div>
       </div>
     </section>
   );
 }
 
 export default Profile;
-
-{
-  /* <div>
-  <p>О себе</p>
-  <input placeholder="Впишите вашу ссылку на hh" />
-</div>; */
-}
