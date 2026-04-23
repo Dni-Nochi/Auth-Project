@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../../store/tokenSlice';
 import { Link, useNavigate } from 'react-router-dom';
-import MyInput from '../../components/MyInput';
 import MyBtn from '../../components/MyBtn';
 
 function Login() {
@@ -68,17 +67,15 @@ function Login() {
           <h2>Авторизоваться</h2>
           <div className={styles.auth_form_input_cont}>
             <p>Ваша почта</p>
-            <MyInput
-              props={{
-                type: 'email',
-                placeholder: 'email',
-                autoComplete: 'username',
-                className: emailError
-                  ? styles.auth_input_error
-                  : styles.auth_input,
-                onChange: (e) => {
-                  setEmail(e.target.value);
-                },
+            <input
+              type="email"
+              placeholder="email"
+              autoComplete="username"
+              className={
+                emailError ? styles.auth_input_error : styles.auth_input
+              }
+              onChange={(e) => {
+                setEmail(e.target.value);
               }}
             />
             <p className={styles.auth_error}>{emailError}</p>
@@ -86,17 +83,15 @@ function Login() {
 
           <div className={styles.auth_form_input_cont}>
             <p>Ваш пароль</p>
-            <MyInput
-              props={{
-                type: 'password',
-                placeholder: 'password',
-                autoComplete: 'current-password',
-                className: passwordError
-                  ? styles.auth_input_error
-                  : styles.auth_input,
-                onChange: (e) => {
-                  setPassword(e.target.value);
-                },
+            <input
+              type="password"
+              placeholder="password"
+              autoComplete="current-password"
+              className={
+                passwordError ? styles.auth_input_error : styles.auth_input
+              }
+              onChange={(e) => {
+                setPassword(e.target.value);
               }}
             />
             <p className={styles.auth_error}>{passwordError}</p>

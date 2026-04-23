@@ -1,7 +1,6 @@
 import styles from './Auth.module.css';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import MyInput from '../../components/MyInput';
 import MyBtn from '../../components/MyBtn';
 
 function Register() {
@@ -89,17 +88,15 @@ function Register() {
           <p>Зарегистрироваться</p>
           <div className={styles.auth_form_input_cont}>
             <p>Введите имя</p>
-            <MyInput
-              props={{
-                type: 'text',
-                placeholder: 'Введите ваше имя',
-                autoComplete: 'given-name',
-                className: firstnameError
-                  ? styles.auth_input_error
-                  : styles.auth_input,
-                onChange: (e) => {
-                  setFirstname(e.target.value);
-                },
+            <input
+              type="text"
+              placeholder="Введите ваше имя"
+              autoComplete="given-name"
+              className={
+                firstnameError ? styles.auth_input_error : styles.auth_input
+              }
+              onChange={(e) => {
+                setFirstname(e.target.value);
               }}
             />
             {firstnameError && (
@@ -108,17 +105,15 @@ function Register() {
           </div>
           <div className={styles.auth_form_input_cont}>
             <p>Введите фамилию</p>
-            <MyInput
-              props={{
-                type: 'text',
-                placeholder: 'Введите вашу фамилию',
-                autoComplete: 'family-name',
-                className: lastnameError
-                  ? styles.auth_input_error
-                  : styles.auth_input,
-                onChange: (e) => {
-                  setLastname(e.target.value);
-                },
+            <input
+              type="text"
+              placeholder="Введите вашу фамилию"
+              autoComplete="family-name"
+              className={
+                lastnameError ? styles.auth_input_error : styles.auth_input
+              }
+              onChange={(e) => {
+                setLastname(e.target.value);
               }}
             />
             {lastnameError && (
@@ -127,34 +122,30 @@ function Register() {
           </div>
           <div className={styles.auth_form_input_cont}>
             <p>Введите почту</p>
-            <MyInput
-              props={{
-                type: 'email',
-                placeholder: 'email',
-                autoComplete: 'email',
-                className: emailError
-                  ? styles.auth_input_error
-                  : styles.auth_input,
-                onChange: (e) => {
-                  setEmail(e.target.value);
-                },
+            <input
+              type="email"
+              placeholder="email"
+              autoComplete="email"
+              className={
+                emailError ? styles.auth_input_error : styles.auth_input
+              }
+              onChange={(e) => {
+                setEmail(e.target.value);
               }}
             />
             {emailError && <p className={styles.auth_error}>{emailError}</p>}
           </div>
           <div className={styles.auth_form_input_cont}>
             <p>Введите пароль</p>
-            <MyInput
-              props={{
-                type: 'password',
-                placeholder: 'password',
-                autoComplete: 'current-password',
-                className: passwordError
-                  ? styles.auth_input_error
-                  : styles.auth_input,
-                onChange: (e) => {
-                  setPassword(e.target.value);
-                },
+            <input
+              type="password"
+              placeholder="password"
+              autoComplete="current-password"
+              className={
+                passwordError ? styles.auth_input_error : styles.auth_input
+              }
+              onChange={(e) => {
+                setPassword(e.target.value);
               }}
             />
             {passwordError && (

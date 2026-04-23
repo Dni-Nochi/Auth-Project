@@ -13,6 +13,7 @@ const User = new Schema({
   userProfession: { type: String },
   userCity: { type: String },
   userBiography: { type: String },
+  shortBiography: { type: String },
   userStack: { type: Array },
 });
 

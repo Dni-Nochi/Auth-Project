@@ -30,7 +30,6 @@ function Profile() {
       if (!response.ok) {
         throw data;
       }
-      console.log(data);
       setStack(data.userStack);
       setProfession(data.userProfession);
       setCity(data.userCity);

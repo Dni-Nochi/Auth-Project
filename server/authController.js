@@ -94,6 +94,8 @@ class AuthController {
   async updateProfile(req, res) {
     try {
       const {
+        firstname,
+        lastname,
         gitHubUrl,
         linkedinUrl,
         headHunterUrl,
@@ -102,6 +104,7 @@ class AuthController {
         userProfession,
         userCity,
         userBiography,
+        shortBiography,
         userStack,
       } = req.body;
       const userId = req.user.id;
@@ -110,6 +113,8 @@ class AuthController {
         userId,
         {
           $set: {
+            firstname,
+            lastname,
             gitHubUrl,
             linkedinUrl,
             headHunterUrl,
@@ -118,6 +123,7 @@ class AuthController {
             userProfession,
             userCity,
             userBiography,
+            shortBiography,
             userStack,
           },
         },
