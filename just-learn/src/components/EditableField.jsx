@@ -1,9 +1,17 @@
 import styles from '../pages/Profile/Profile.module.css';
 
-function EditableField({ active, value, onChange, placeholder }) {
+function EditableField({
+  type,
+  active,
+  value,
+  onChange,
+  placeholder,
+  pClassName,
+}) {
   if (active) {
     return (
       <input
+        type={type}
         className={styles.profile_short_info_input}
         placeholder={placeholder}
         value={value || ''}
@@ -11,7 +19,7 @@ function EditableField({ active, value, onChange, placeholder }) {
       />
     );
   }
-  return <p>{value}</p>;
+  return <p className={pClassName}>{value}</p>;
 }
 
 export default EditableField;

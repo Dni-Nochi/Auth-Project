@@ -23,7 +23,7 @@ class AuthController {
         });
       }
 
-      const { firstname, lastname, email, password, gitHubUrl } = req.body;
+      const { firstname, lastname, email, password } = req.body;
 
       const candidate = await User.findOne({ email });
       const validate = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -47,7 +47,6 @@ class AuthController {
         lastname,
         email,
         password: hashPassword,
-        gitHubUrl,
       });
 
       await user.save();
@@ -93,12 +92,14 @@ class AuthController {
   }
   async updateProfile(req, res) {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        const error = errors.array()[0];
+        return res.status(400).json({ message: error.msg, field: error.path });
+      }
       const {
         firstname,
         lastname,
-        gitHubUrl,
-        linkedinUrl,
-        headHunterUrl,
         userLearn,
         userExperience,
         userProfession,
@@ -115,9 +116,6 @@ class AuthController {
           $set: {
             firstname,
             lastname,
-            gitHubUrl,
-            linkedinUrl,
-            headHunterUrl,
             userLearn,
             userExperience,
             userProfession,
@@ -125,6 +123,35 @@ class AuthController {
             userBiography,
             shortBiography,
             userStack,
+          },
+        },
+        { new: true },
+      ).select('-password');
+
+      return res.json({ updatedUser, message: 'Успешно обновлено' });
+    } catch (e) {
+      console.log(e);
+      res.status(400).json({ message: 'Ошибка при обновлении профиля' });
+    }
+  }
+
+  async updateUrls(req, res) {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        const error = errors.array()[0];
+        return res.status(400).json({ message: error.msg, field: error.path });
+      }
+      const { gitHubUrl, linkedinUrl, headHunterUrl } = req.body;
+      const userId = req.user.id;
+
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        {
+          $set: {
+            gitHubUrl,
+            linkedinUrl,
+            headHunterUrl,
           },
         },
         { new: true },

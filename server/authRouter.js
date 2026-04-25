@@ -17,7 +17,45 @@ router.post(
   controller.registration,
 );
 router.post('/login', controller.login);
-router.patch('/profile', authMiddleware, controller.updateProfile);
+router.patch(
+  '/profile',
+  authMiddleware,
+  [
+    check('firstname', 'Заполните поле с именем').notEmpty(),
+    check('lastname', 'Заполните поле с фамилией').notEmpty(),
+    check('userExperience')
+      .isInt({ min: 0 })
+      .withMessage('Опыт пользователя не может быть меньше 0'),
+  ],
+  controller.updateProfile,
+);
+router.patch(
+  '/urls',
+  authMiddleware,
+  [
+    check('gitHubUrl')
+      .optional({ checkFalsy: true })
+      .isURL()
+      .withMessage('Корректно введите поле ссылки')
+      .contains('github.com')
+      .withMessage('Ссылка должна быть на GitHub'),
+
+    check('linkedinUrl')
+      .optional({ checkFalsy: true })
+      .isURL()
+      .withMessage('Корректно введите поле ссылки')
+      .contains('linkedin.com')
+      .withMessage('Ссылка должна быть на Linkedin'),
+
+    check('headHunterUrl')
+      .optional({ checkFalsy: true })
+      .isURL()
+      .withMessage('Корректно введите поле ссылки')
+      .contains('hh.kz')
+      .withMessage('Ссылка должна быть на Head Hunter'),
+  ],
+  controller.updateUrls,
+);
 router.get('/info', authMiddleware, controller.getUserInfo);
 
 module.exports = router;

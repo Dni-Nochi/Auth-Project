@@ -1,8 +1,8 @@
-import styles from './ForComponents.module.css';
+import styles from './Profile.module.css';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import SVG from './SVG';
-import EditableField from './EditableField';
+import SVG from '../../components/SVG';
+import EditableField from '../../components/EditableField';
 
 function ProfileLeftSideDes() {
   const token = useSelector((state) => state.token.tokenValue);
@@ -13,7 +13,11 @@ function ProfileLeftSideDes() {
   const [profession, setProfession] = useState('');
   const [experience, setExperience] = useState(0);
   const [shortBiography, setShortBiography] = useState('');
+  const [dataMessage, setDataMessage] = useState('');
 
+  function rotateRedactActive() {
+    setRedactActive(!redactActive);
+  }
   const experienceCheck =
     experience === 0
       ? 'Нет опыта'
@@ -22,8 +26,6 @@ function ProfileLeftSideDes() {
         : experience >= 2 && experience <= 4
           ? 'года'
           : 'лет';
-
-  console.log(redactActive);
   async function getUserInfo() {
     try {
       const response = await fetch('http://localhost:5000/auth/info', {
@@ -69,8 +71,16 @@ function ProfileLeftSideDes() {
       if (!response.ok) {
         throw data;
       }
-      console.log(data, data.message);
+
+      setDataMessage(data.message);
+      if (data.message) {
+        setTimeout(() => {
+          setDataMessage('');
+          setRedactActive(false);
+        }, 1500);
+      }
     } catch (err) {
+      setDataMessage(err.message);
       console.log(err.message);
     }
   }
@@ -95,46 +105,54 @@ function ProfileLeftSideDes() {
           />
         </div>
         <div className={styles.profile_short_info_fullname_cont}>
-          {redactActive ? (
-            <input
-              className={styles.profile_short_info_input}
-              placeholder="Имя"
-              value={firstName || ''}
-              onChange={(e) => {
-                setFirstName(e.target.value);
-              }}
-            />
-          ) : (
-            <p>{firstName}</p>
-          )}
-          {redactActive ? (
-            <input
-              className={styles.profile_short_info_input}
-              placeholder="Фамилия"
-              value={lastName || ''}
-              onChange={(e) => {
-                setLastName(e.target.value);
-              }}
-            />
-          ) : (
-            <p>{lastName}</p>
-          )}
-        </div>
-        {redactActive ? (
-          <input
-            className={styles.profile_short_info_input}
-            placeholder="Ваша отрасль"
-            value={profession || ''}
+          <EditableField
+            active={redactActive}
+            pClassName={styles.profile_short_info_data_value}
+            placeholder={'Фамилия'}
+            value={lastName}
             onChange={(e) => {
-              setProfession(e.target.value);
+              setLastName(e.target.value);
             }}
           />
-        ) : (
-          <p>{profession}</p>
-        )}
 
+          <EditableField
+            active={redactActive}
+            pClassName={styles.profile_short_info_data_value}
+            placeholder={'Имя'}
+            value={firstName}
+            onChange={(e) => {
+              setFirstName(e.target.value);
+            }}
+          />
+        </div>
+        <EditableField
+          active={redactActive}
+          pClassName={styles.profile_short_info_data_value}
+          placeholder={'Ваша отрасль'}
+          value={profession}
+          onChange={(e) => {
+            setProfession(e.target.value);
+          }}
+        />
+      </div>
+      <div className={styles.profile_short_info_biography}>
+        {redactActive ? (
+          <textarea
+            className={styles.profile_aboutme_input}
+            placeholder={'Коротко о вас'}
+            value={shortBiography || ''}
+            onChange={(e) => {
+              setShortBiography(e.target.value);
+            }}
+          ></textarea>
+        ) : (
+          <p>{shortBiography}</p>
+        )}
+      </div>
+      <div>
         {redactActive ? (
           <input
+            type="number"
             className={styles.profile_short_info_input}
             placeholder="Ваш опыт"
             value={experience || ''}
@@ -146,30 +164,21 @@ function ProfileLeftSideDes() {
           </p>
         )}
       </div>
-      {redactActive ? (
-        <input
-          className={styles.profile_short_info_input}
-          placeholder="Коротко о себе"
-          value={shortBiography || ''}
-          onChange={(e) => {
-            setShortBiography(e.target.value);
-          }}
-        />
-      ) : (
-        <p>{shortBiography}</p>
-      )}
-      <div>
-        <p>user contacts</p>
-      </div>
+      <p>{dataMessage}</p>
       {redactActive && (
-        <button
-          className={styles.profile_save}
-          onClick={() => {
-            userUpdateInfo();
-          }}
-        >
-          Сохранить
-        </button>
+        <div className={styles.profile_short_info_save}>
+          <button className={styles.profile_save} onClick={rotateRedactActive}>
+            Отменить
+          </button>
+          <button
+            className={styles.profile_save}
+            onClick={() => {
+              userUpdateInfo();
+            }}
+          >
+            Сохранить
+          </button>
+        </div>
       )}
     </div>
   );
