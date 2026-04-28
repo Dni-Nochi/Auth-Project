@@ -10,22 +10,15 @@ function ProfileLeftSideDes() {
   const [initials, setInitials] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [birthDate, setBirthDate] = useState('');
+  const [birthDateInput, setBirthDateInput] = useState('');
   const [profession, setProfession] = useState('');
-  const [experience, setExperience] = useState(0);
   const [shortBiography, setShortBiography] = useState('');
   const [dataMessage, setDataMessage] = useState('');
 
   function rotateRedactActive() {
     setRedactActive(!redactActive);
   }
-  const experienceCheck =
-    experience === 0
-      ? 'Нет опыта'
-      : experience === 1
-        ? 'год'
-        : experience >= 2 && experience <= 4
-          ? 'года'
-          : 'лет';
   async function getUserInfo() {
     try {
       const response = await fetch('http://localhost:5000/auth/info', {
@@ -38,13 +31,16 @@ function ProfileLeftSideDes() {
         throw data;
       }
 
-      console.log(data);
+      const date = new Date(data.birthDate);
+      const formatted = date.toLocaleDateString('ru-RU');
+
       setInitials(data.firstname[0] + data.lastname[0]);
       setFirstName(data.firstname);
       setLastName(data.lastname);
+      setBirthDate(formatted);
       setProfession(data.userProfession);
-      setExperience(data.userExperience);
       setShortBiography(data.shortBiography);
+      console.log(data);
     } catch (err) {
       console.log(err.message);
     }
@@ -61,8 +57,8 @@ function ProfileLeftSideDes() {
         body: JSON.stringify({
           firstname: firstName,
           lastname: lastName,
+          birthDate: birthDateInput,
           userProfession: profession,
-          userExperience: experience,
           shortBiography: shortBiography,
         }),
       });
@@ -93,17 +89,6 @@ function ProfileLeftSideDes() {
   return (
     <div className={styles.profile_short_info}>
       <div className={styles.profile_short_info_name_cont}>
-        <div className={styles.profile_short_cont_avatar}>
-          <h2 className={styles.profile_short_info_avatar}>{initials}</h2>
-          <SVG
-            id={'redact'}
-            width={16}
-            height={16}
-            className={styles.profile_short_redact}
-            useClassName={styles.profile_short_redact_icon}
-            onClick={() => setRedactActive(!redactActive)}
-          />
-        </div>
         <div className={styles.profile_short_info_fullname_cont}>
           <EditableField
             active={redactActive}
@@ -125,6 +110,18 @@ function ProfileLeftSideDes() {
             }}
           />
         </div>
+        {redactActive ? (
+          <input
+            type="date"
+            value={birthDateInput}
+            className={styles.profile_short_info_age}
+            onChange={(e) => {
+              setBirthDateInput(e.target.value);
+            }}
+          />
+        ) : (
+          <p>{birthDate}</p>
+        )}
         <EditableField
           active={redactActive}
           pClassName={styles.profile_short_info_data_value}
@@ -134,6 +131,21 @@ function ProfileLeftSideDes() {
             setProfession(e.target.value);
           }}
         />
+      </div>
+      <div className={styles.profile_short_cont_avatar}>
+        <h2 className={styles.profile_short_info_avatar}>
+          {initials}
+          <span>
+            <SVG
+              id={'redact'}
+              width={16}
+              height={16}
+              // className={styles.profile_short_redact}
+              useClassName={styles.profile_short_redact_icon}
+              onClick={() => setRedactActive(!redactActive)}
+            />
+          </span>
+        </h2>
       </div>
       <div className={styles.profile_short_info_biography}>
         {redactActive ? (
@@ -149,21 +161,7 @@ function ProfileLeftSideDes() {
           <p>{shortBiography}</p>
         )}
       </div>
-      <div>
-        {redactActive ? (
-          <input
-            type="number"
-            className={styles.profile_short_info_input}
-            placeholder="Ваш опыт"
-            value={experience || ''}
-            onChange={(e) => setExperience(e.target.value)}
-          />
-        ) : (
-          <p>
-            Опыт работы: {experience !== 0 ? experience : ''} {experienceCheck}
-          </p>
-        )}
-      </div>
+
       <p>{dataMessage}</p>
       {redactActive && (
         <div className={styles.profile_short_info_save}>

@@ -12,7 +12,7 @@ function HeaderAuth() {
   }, []);
 
   const setActive = ({ isActive }) =>
-    isActive ? styles.profile : styles.not_active_profile;
+    isActive ? styles.profile : `${styles.profile} ${styles.not_active}`;
 
   if (loading) {
     return <p className={styles.loading}>Загрузка...</p>;

@@ -8,7 +8,7 @@ function HeaderNav() {
     isActive ? styles.header_active_links : styles.not_active_link;
 
   return (
-    <nav className={styles.navBar}>
+    <nav>
       <ul className={styles.navBar_items}>
         <li>
           <NavLink to={token ? '/' : '/login'} className={setActive}>

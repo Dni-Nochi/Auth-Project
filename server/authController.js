@@ -100,6 +100,7 @@ class AuthController {
       const {
         firstname,
         lastname,
+        birthDate,
         userLearn,
         userExperience,
         userProfession,
@@ -116,6 +117,7 @@ class AuthController {
           $set: {
             firstname,
             lastname,
+            birthDate,
             userLearn,
             userExperience,
             userProfession,

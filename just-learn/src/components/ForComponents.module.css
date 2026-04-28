@@ -4,10 +4,10 @@
   align-items: center;
   gap: 14px;
   width: 90%;
+  height: 52px;
   margin-block: 15px;
   box-sizing: border-box;
   border-radius: 14px;
-  background-color: #2a4534;
   transition: border-color 0.3s ease;
 }
 
@@ -34,6 +34,11 @@
   color: #c8e6c9;
   text-decoration: none;
   font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.contact_link a:hover {
+  color: #fff;
 }
 
 .contact_link input {
@@ -44,14 +49,14 @@
   color: #fff;
   background: transparent;
   box-sizing: border-box;
-  border: 1px solid #455f52;
+  border: 1px solid #549e73;
   border-radius: 12px;
   outline: none;
   font-size: 14px;
   transition: border-color 0.3s ease;
 }
 .contact_link input:focus {
-  border-color: #549e73;
+  border-color: #f5f3ef;
   transition: border-color 0.3s ease;
 }
 .contact_link input::placeholder {

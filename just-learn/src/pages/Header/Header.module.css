@@ -5,18 +5,16 @@
   align-items: center;
   padding-top: 25px;
   padding-bottom: 25px;
-  background-color: #18261f;
+  background-color: #2f7f53;
 }
 
 .header_structure {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 1320px;
+  width: 100%;
+  max-width: 1320px;
   margin: 0 auto;
-}
-.navBar {
-  display: flex;
 }
 
 .navBar_items {
@@ -30,26 +28,18 @@
 }
 
 .profile {
-  padding: 10px 25px 10px 25px;
+  padding: 10px 25px;
   color: #fff;
-  border: 2px solid #7cbf8f;
   border-radius: 12px;
-  background-color: #2f7f53;
   box-sizing: border-box;
 }
 
-.not_active_profile {
-  padding: 10px 25px 10px 25px;
-  color: #fff;
-  border: 2px solid #7cbf8f;
-  border-radius: 12px;
-  background-color: inherit;
-  box-sizing: border-box;
-  opacity: 0.6;
+.not_active {
+  opacity: 0.5;
   transition: opacity 0.3s ease;
 }
 
-.not_active_profile:hover {
+.not_active:hover {
   opacity: 1;
 }
 
@@ -68,11 +58,11 @@
 }
 
 .project_name {
-  color: #7cbf8f;
-  transition: color 0.3s ease;
+  color: #fff;
+  transition: opacity 0.3s ease;
 }
 .project_name:hover {
-  color: #fff;
+  opacity: 0.7;
 }
 
 .auth_link {
@@ -92,7 +82,7 @@
 }
 
 .loading {
-  padding: 10px 25px 10px 25px;
+  padding: 10px 25px;
   color: #fff;
   box-sizing: border-box;
   border: 2px solid #7cbf8f;

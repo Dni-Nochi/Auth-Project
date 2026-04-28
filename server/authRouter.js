@@ -23,9 +23,9 @@ router.patch(
   [
     check('firstname', 'Заполните поле с именем').notEmpty(),
     check('lastname', 'Заполните поле с фамилией').notEmpty(),
-    check('userExperience')
-      .isInt({ min: 0 })
-      .withMessage('Опыт пользователя не может быть меньше 0'),
+    // check('userExperience')
+    //   .isInt({ min: 0 })
+    //   .withMessage('Опыт пользователя не может быть меньше 0'),
   ],
   controller.updateProfile,
 );

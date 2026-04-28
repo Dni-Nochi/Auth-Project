@@ -1,29 +1,37 @@
 .intro {
   display: flex;
-  justify-content: space-evenly;
-  width: 1320px;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1320px;
+  height: 100vh;
   margin: 0 auto;
   padding-top: 160px;
-  gap: 212px;
 }
 
 .intro_my_way {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  width: 705px;
+  width: 100%;
+  max-width: 705px;
   box-sizing: border-box;
 }
 
 .for_me {
   font-size: 42px;
+  color: #8b9c94;
 }
 
 .for_me_expanded {
+  padding: 20px;
   font-size: 24px;
+  text-align: center;
+  color: #fff;
+  background-color: #3e7d68;
+  border-radius: 14px;
 }
 
 .for_me_expanded_info {
   font-size: 18px;
-  color: #bababa;
+  color: #282828;
 }

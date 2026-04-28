@@ -1,21 +1,15 @@
 .profile_cont {
   display: flex;
-  justify-content: space-between;
-  width: 1320px;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 1320px;
+  height: 100vh;
   margin: 0 auto;
   padding-block: 120px;
 }
 
-.profile_left_side_cont {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
-  width: 50%;
-}
-
 .profile_right_side_cont {
-  width: 50%;
+  width: 30%;
 }
 
 .profile_main {
@@ -24,7 +18,8 @@
   padding: 20px;
   border: 1px solid #455f52;
   border-radius: 25px;
-  background-color: #2a4738;
+  color: #fff;
+  background-color: #2f7f53;
   transition: border-color 0.3s ease;
 }
 
@@ -53,8 +48,7 @@
 
 .profile_prof {
   padding: 8px 14px 8px 14px;
-  color: #6ecf96;
-  background-color: #355943;
+  color: #fff;
   border-radius: 12px;
   transition: all 0.3s ease;
 }
@@ -69,15 +63,15 @@
   padding: 12px 21px 12px 24px;
   color: #fff;
   box-sizing: border-box;
-  border: 2px solid #455f52;
-  background-color: #2a4738;
+  border: 1px solid #549e73;
   border-radius: 12px;
+  background-color: #69a182;
   transition: border-color 0.3s ease;
   outline: none;
 }
 
 .profile_input:focus {
-  border: 2px solid #7cbf8f;
+  border: 1px solid #f5f3ef;
 }
 
 .profile_prof:hover {
@@ -95,12 +89,16 @@
   margin-bottom: 15px;
   padding: 12px 21px 12px 24px;
   color: #fff;
+  border: 1px solid #549e73;
   box-sizing: border-box;
-  border: 2px solid #455f52;
-  background-color: #2a4738;
+  background-color: inherit;
   border-radius: 12px;
   outline: none;
   transition: border-color 0.3s ease;
+}
+.profile_aboutme_input::placeholder {
+  color: #fff;
+  opacity: 0.7;
 }
 .profile_aboutme_input:focus {
   border-color: #6ecf96;
@@ -187,26 +185,32 @@
 
 /* Для левой стороны */
 
+.profile_left_side_cont {
+  width: 60%;
+  height: fit-content;
+}
+
 .profile_short_info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 50% auto;
   gap: 14px;
   padding: 22px;
   box-sizing: border-box;
-  border: 1px solid #455f52;
   border-radius: 25px;
-  background-color: #2a4534;
+  color: #fff;
+  background-color: #2f7f53;
 }
 
 .profile_short_info_name_cont {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: center;
 }
 
 .profile_short_cont_avatar {
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 .profile_short_info_avatar {
@@ -223,13 +227,14 @@
 
 .profile_short_redact {
   position: absolute;
-  bottom: 8%;
-  right: 0;
+  bottom: 3%;
+  right: 38%;
+  transform: translateX(38%);
   padding: 5px;
   cursor: pointer;
   border: 1px solid #549e73;
   border-radius: 50%;
-  background-color: #2a4534;
+  background-color: #3e7d68;
   transition: background-color 0.3s ease;
 }
 
@@ -249,26 +254,36 @@
 
 .profile_short_info_input {
   width: 100%;
-  margin-top: 10px;
   margin-bottom: 15px;
   padding: 12px 21px 12px 24px;
   color: #fff;
   box-sizing: border-box;
-  border: 2px solid #455f52;
-  background-color: #2a4738;
+  border: 1px solid #fff;
+  background-color: inherit;
   border-radius: 12px;
   outline: none;
   transition: all 0.4s ease;
 }
 
 .profile_short_info_data_value {
-  padding-top: 6px;
+  padding-top: 10px;
+}
+
+.profile_short_info_age {
+  padding: 5px;
+  margin-bottom: 15px;
+  color: #fff;
+  box-sizing: border-box;
+  border: 1px solid #f5f3ef;
+  border-radius: 8px;
+  background-color: inherit;
 }
 
 .profile_short_info_biography {
+  grid-column: 1 / span 2;
   width: 100%;
   padding-bottom: 15px;
-  border-bottom: 1px solid #455f52;
+  box-sizing: border-box;
 }
 
 .profile_save {
@@ -277,9 +292,9 @@
   padding: 15px 25px;
   cursor: pointer;
   color: #fff;
-  border: 2px solid #455f52;
+  border: 2px solid #fff;
   border-radius: 12px;
-  background-color: #355943;
+  background-color: #3e7d68;
   transition: border-color 0.3s ease;
 }
 
@@ -289,6 +304,7 @@
 
 .profile_short_info_save {
   display: flex;
+  justify-content: end;
   gap: 10px;
 }
 
@@ -320,10 +336,12 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 100%;
+  margin-top: 20px;
   padding: 25px;
+  color: #fff;
   box-sizing: border-box;
   border: 1px solid #455f52;
-  background-color: #2a4534;
+  background-color: #2f7f53;
   border-radius: 20px;
 }
