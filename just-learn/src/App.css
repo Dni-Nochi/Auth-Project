@@ -26,10 +26,12 @@ li {
 a {
   text-decoration: none;
 }
-
+#root {
+  background-color: #f5f3ef;
+}
 .main_rel {
   position: relative;
-  background-color: #f5f3ef;
+  min-height: 100vh;
 }
 
 button {

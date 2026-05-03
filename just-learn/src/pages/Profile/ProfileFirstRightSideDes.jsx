@@ -2,6 +2,7 @@ import styles from './Profile.module.css';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import UserSkills from '../../components/UserSkills';
+import EditableField from '../../components/EditableField';
 function ProfileFirstRightSideDes() {
   const token = useSelector((state) => state.token.tokenValue);
   const [redact, setRedact] = useState(false);
@@ -38,37 +39,44 @@ function ProfileFirstRightSideDes() {
   }
 
   function createSkill() {
-    if (inputValue.trim()) {
-      setStack([
-        ...stack,
-        { value: inputValue, id: Date.now() + Math.random() },
-      ]);
-      setInputValue('');
+    if (!inputValue.trim()) return;
+
+    const isDuplicate = stack.some(
+      (item) => item.value.toLowerCase() === inputValue.trim().toLowerCase(),
+    );
+
+    if (isDuplicate) {
+      setDataMessage('Такой навык уже есть');
+      return;
     }
+    setStack([...stack, { value: inputValue, id: Date.now() + Math.random() }]);
+    setInputValue('');
   }
 
   async function userUpdateRequest() {
     try {
-      const response = await fetch('http://localhost:5000/auth/profile', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-          Authorization: `Bearer ${token}`,
+      const response = await fetch(
+        'http://localhost:5000/auth/profile/aboutPerson',
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            userProfession: profession,
+            userCity: city,
+            userBiography: biography,
+            userStack: stack,
+          }),
         },
-        body: JSON.stringify({
-          userStack: stack,
-          userProfession: profession,
-          userCity: city,
-          userBiography: biography,
-        }),
-      });
+      );
       const data = await response.json();
 
       if (!response.ok) {
         throw data;
       }
 
-      console.log(data.message, token);
       setDataMessage(data.message);
       if (data.message) {
         setTimeout(() => {
@@ -76,9 +84,37 @@ function ProfileFirstRightSideDes() {
           setRedact(false);
         }, 1500);
       }
+      return true;
     } catch (err) {
       console.log(err);
       setDataMessage(err.message);
+      return false;
+    }
+  }
+
+  async function deleteSkill(skillId) {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/auth/profile/aboutPerson/${skillId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const data = await response.json();
+      if (!response.ok) {
+        throw data;
+      }
+      console.log(data);
+      setStack(stack.filter((item) => item.id !== skillId));
+      setDataMessage(data.message);
+      setTimeout(() => {
+        setDataMessage('');
+      }, 1500);
+    } catch (err) {
+      console.log(err);
     }
   }
 
@@ -91,53 +127,66 @@ function ProfileFirstRightSideDes() {
     <div className={`${styles.profile_main} ${redact ? styles.active : ''}`}>
       <div className={styles.profile_main_title}>
         <p>Основная информация</p>
-        <p className={styles.profile_prof}>Профессия</p>
       </div>
       <div className={styles.profile_main_info}>
-        <div className={styles.profile_input_cont}>
-          <p>Позиция</p>
-          <input
-            className={styles.profile_input}
-            value={profession || ''}
-            placeholder="Впишите свою позицию"
+        <div>
+          <p className={styles.profile_title_info}>Позиция</p>
+          <EditableField
+            active={redact}
+            value={profession}
+            aboutInput={'Впишите свою позицию'}
+            placeholder={'Впишите свою позицию'}
             onChange={(e) => setProfession(e.target.value)}
-            disabled={!redact}
           />
         </div>
-        <div className={styles.profile_input_cont}>
-          <p>Город</p>
-          <input
-            className={styles.profile_input}
-            value={city || ''}
-            placeholder="Впишите ваш город"
-            onChange={(e) => {
-              setCity(e.target.value);
-            }}
-            disabled={!redact}
+        <div>
+          <p className={styles.profile_title_info}>Город</p>
+          <EditableField
+            active={redact}
+            value={city}
+            aboutInput={'Впишите ваш город'}
+            placeholder={'Впишите ваш город'}
+            onChange={(e) => setCity(e.target.value)}
           />
         </div>
       </div>
-      <div>
-        <p>О себе</p>
-        <textarea
-          className={styles.profile_aboutme_input}
-          value={biography || ''}
-          placeholder="Расскажите про себя"
-          onChange={(e) => setBiography(e.target.value)}
-          disabled={!redact}
-        ></textarea>
+      <div className={styles.profile_main_biography}>
+        <p className={styles.profile_title_info}>О себе</p>
+        {!biography && !redact ? (
+          <p>Расскажите о себе</p>
+        ) : redact ? (
+          <textarea
+            className={styles.profile_aboutme_input}
+            value={biography || ''}
+            placeholder="Расскажите про себя"
+            onChange={(e) => setBiography(e.target.value)}
+            disabled={!redact}
+          ></textarea>
+        ) : (
+          <p>{biography}</p>
+        )}
       </div>
-      <div>
-        <p>Стек технологий</p>
-        <div className={styles.profile_stack}>
-          {stack.map((skill) => {
-            return (
-              <UserSkills className={styles.user_Skill} key={skill.id}>
-                {skill.value}
-              </UserSkills>
-            );
-          })}
-        </div>
+      <div className={styles.profile_stack_cont}>
+        <p className={styles.profile_title_info}>Стек технологий</p>
+        {stack.length > 0 ? (
+          <div className={styles.profile_stack}>
+            {stack.map((skill) => {
+              return (
+                <UserSkills
+                  active={redact}
+                  className={styles.user_Skill}
+                  key={skill.id}
+                  idItem={skill.id}
+                  deleteItem={deleteSkill}
+                >
+                  {skill.value}
+                </UserSkills>
+              );
+            })}
+          </div>
+        ) : (
+          <p>Впишите свои навыки</p>
+        )}
         <div>
           <button
             onClick={() => {
@@ -162,12 +211,20 @@ function ProfileFirstRightSideDes() {
       <div className={styles.profile_redact_cont}>
         {redact ? (
           <div className={styles.profile_redact_save}>
-            <button className={styles.profile_save} onClick={rotateRedact}>
+            <button
+              className={styles.profile_save}
+              onClick={() => {
+                rotateRedact();
+                setDataMessage('');
+              }}
+            >
               Отменить
             </button>
             <button
               className={styles.profile_save}
-              onClick={() => userUpdateRequest()}
+              onClick={async () => {
+                await userUpdateRequest();
+              }}
             >
               Сохранить
             </button>

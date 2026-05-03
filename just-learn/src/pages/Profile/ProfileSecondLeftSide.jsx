@@ -33,7 +33,7 @@ function ProfileSecondLeftSide() {
 
   async function updateLinks() {
     try {
-      const response = await fetch('http://localhost:5000/auth/urls', {
+      const response = await fetch('http://localhost:5000/auth/profile/urls', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -52,19 +52,18 @@ function ProfileSecondLeftSide() {
       setErrorGitHubUrl('');
       setErrorLinkedinUrl('');
       setErrorHeadHunterUrl('');
-      console.log(gitHubUrl);
       if (data.message) {
         setTimeout(() => {
           setDataAnswer('');
         }, 1500);
       }
     } catch (err) {
-      console.log(err);
       const setters = {
         gitHubUrl: setErrorGitHubUrl,
         linkedinUrl: setErrorLinkedinUrl,
         headHunterUrl: setErrorHeadHunterUrl,
       };
+      console.log(err);
       if (err.field && setters[err.field]) {
         setters[err.field](err.message);
       }
@@ -84,6 +83,7 @@ function ProfileSecondLeftSide() {
         value={gitHubUrl}
         onChange={setGitHubUrl}
         onSave={updateLinks}
+        errorMessage={errorGitHubUrl}
       />
       {errorGitHubUrl}
       <LinkInput
@@ -92,6 +92,7 @@ function ProfileSecondLeftSide() {
         value={linkedinUrl}
         onChange={setLinkedinUrl}
         onSave={updateLinks}
+        errorMessage={errorLinkedinUrl}
       />
       {errorLinkedinUrl}
       <LinkInput
@@ -100,6 +101,7 @@ function ProfileSecondLeftSide() {
         value={headHunterUrl}
         onChange={setHeadHunterUrl}
         onSave={updateLinks}
+        errorMessage={errorHeadHunter}
       />
       {errorHeadHunter}
       {dataAnswer}

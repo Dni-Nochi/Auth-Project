@@ -4,11 +4,14 @@ function EditableField({
   type,
   active,
   value,
+  aboutInput,
   onChange,
   placeholder,
   pClassName,
 }) {
-  if (active) {
+  if (!value && !active) {
+    return <p>{aboutInput}</p>;
+  } else if (active) {
     return (
       <input
         type={type}

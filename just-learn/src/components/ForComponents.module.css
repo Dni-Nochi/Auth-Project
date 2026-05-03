@@ -25,22 +25,26 @@
   z-index: 10;
   font-size: 13px;
   font-weight: 600;
-  color: #fff;
-  background-color: #355943;
+  color: #6ecf96;
+  background-color: #f5f3ef;
   border-radius: 8px;
 }
 
+.contact_icon:hover {
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
 .contact_link a {
-  color: #c8e6c9;
+  color: #6ecf96;
   text-decoration: none;
   font-size: 14px;
   transition: color 0.3s ease;
 }
 
-.contact_link a:hover {
+.contact_text_link:hover {
   color: #fff;
 }
-
 .contact_link input {
   position: absolute;
   width: 100%;
@@ -60,7 +64,8 @@
   transition: border-color 0.3s ease;
 }
 .contact_link input::placeholder {
-  color: #758179;
+  opacity: 0.6;
+  color: #fff;
 }
 
 .contact_action {
@@ -77,4 +82,29 @@
 
 .contact_action:hover {
   color: #fff;
+}
+
+.user_skill {
+  position: relative;
+  padding: 8px 38px 8px 20px;
+  border: 1px solid #a6c8b5;
+  border-radius: 24px;
+  background-color: #4d8f72;
+}
+
+.remove_user_skill {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  font-size: 14px;
+  width: 15px;
+  color: #a6c8b5;
+  height: auto;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: color 0.3s ease;
+}
+.remove_user_skill:hover {
+  color: #fff;
+  transition: color 0.3s ease;
 }

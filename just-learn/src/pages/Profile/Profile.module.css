@@ -3,13 +3,12 @@
   justify-content: space-around;
   width: 100%;
   max-width: 1320px;
-  height: 100vh;
   margin: 0 auto;
   padding-block: 120px;
 }
 
 .profile_right_side_cont {
-  width: 30%;
+  width: 37%;
 }
 
 .profile_main {
@@ -32,12 +31,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 30px;
+  padding-bottom: 20px;
 }
 
 .profile_main_info {
   display: flex;
-  gap: 79px;
+  gap: 20px;
+  padding-bottom: 20px;
 }
 .profile_get_info {
   display: flex;
@@ -46,14 +46,9 @@
   padding-top: 20px;
 }
 
-.profile_prof {
-  padding: 8px 14px 8px 14px;
-  color: #fff;
-  border-radius: 12px;
-  transition: all 0.3s ease;
-}
-.profile_input_cont {
-  width: 40%;
+.profile_title_info {
+  padding-bottom: 5px;
+  opacity: 0.6;
 }
 
 .profile_input {
@@ -65,18 +60,22 @@
   box-sizing: border-box;
   border: 1px solid #549e73;
   border-radius: 12px;
-  background-color: #69a182;
+  background-color: inherit;
   transition: border-color 0.3s ease;
   outline: none;
+}
+
+.profile_input::placeholder {
+  opacity: 0.6;
+  color: #fff;
 }
 
 .profile_input:focus {
   border: 1px solid #f5f3ef;
 }
 
-.profile_prof:hover {
-  cursor: default;
-  transform: scale(1.1);
+.profile_main_biography {
+  padding-bottom: 15px;
 }
 
 .profile_aboutme_input {
@@ -104,6 +103,10 @@
   border-color: #6ecf96;
 }
 
+.profile_stack_cont {
+  padding-top: 15px;
+}
+
 .profile_stack {
   display: flex;
   flex-wrap: wrap;
@@ -111,47 +114,26 @@
   padding-block: 15px;
 }
 
-.profile_create_user_skill {
-  width: fit-content;
-  margin-top: 12px;
-  padding: 10px 20px;
-  cursor: pointer;
-  color: #758179;
-  background-color: #2a4534;
-  border: 1px dashed #758179;
-  border-radius: 30px;
-  transition:
-    color 0.3s ease,
-    border-color 0.3s ease,
-    background-color 0.3s ease;
-  outline: none;
-}
-
-.profile_create_user_skill:hover {
-  color: #6ecf96;
-  border-color: #6ecf96;
-  background-color: #355943;
-}
-
-.profile_create_user_skill:focus {
-  color: #6ecf96;
-  border-color: #6ecf96;
-}
-
 .profile_create_skill {
-  width: 60%;
+  width: 220px;
   margin-left: 20px;
   padding: 10px 25px;
   color: #fff;
-  border: 2px solid #455f52;
+  box-sizing: border-box;
+  border: 2px solid #549e73;
   border-radius: 30px;
-  background-color: #2a4534;
-  transition: all 0.6s ease;
+  background-color: inherit;
+  transition: all 0.5s ease;
   outline: none;
 }
 
 .profile_create_skill:hover {
   border-color: #6ecf96;
+}
+
+.profile_create_skill::placeholder {
+  color: #fff;
+  opacity: 0.6;
 }
 
 .profile_create_skill:focus {
@@ -162,6 +144,31 @@
   pointer-events: none;
   opacity: 0;
   width: 0%;
+}
+
+.profile_create_user_skill {
+  width: fit-content;
+  margin-top: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  color: #f5f3ef;
+  background-color: inherit;
+  border: 1px dashed #549e73;
+  border-radius: 30px;
+  transition:
+    color 0.3s ease,
+    border-color 0.3s ease;
+  outline: none;
+}
+
+.profile_create_user_skill:hover {
+  color: #6ecf96;
+  border-color: #6ecf96;
+}
+
+.profile_create_user_skill:focus {
+  color: #6ecf96;
+  border-color: #6ecf96;
 }
 
 .profile_redact_cont {
@@ -207,6 +214,11 @@
   justify-content: center;
 }
 
+.profile_short_info_name_cont input::placeholder {
+  opacity: 0.6;
+  color: #fff;
+}
+
 .profile_short_cont_avatar {
   position: relative;
   display: flex;
@@ -214,6 +226,7 @@
 }
 
 .profile_short_info_avatar {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -221,14 +234,15 @@
   height: 120px;
   padding: 25px;
   box-sizing: border-box;
-  background-color: #549e73;
+  color: #2f7f53;
+  background-color: #fff;
   border-radius: 50%;
 }
 
 .profile_short_redact {
   position: absolute;
-  bottom: 3%;
-  right: 38%;
+  bottom: 5%;
+  right: 12%;
   transform: translateX(38%);
   padding: 5px;
   cursor: pointer;
@@ -258,11 +272,15 @@
   padding: 12px 21px 12px 24px;
   color: #fff;
   box-sizing: border-box;
-  border: 1px solid #fff;
+  border: 1px solid #549e73;
   background-color: inherit;
   border-radius: 12px;
   outline: none;
-  transition: all 0.4s ease;
+  transition: border-color 0.4s ease;
+}
+
+.profile_short_info_input:focus {
+  border-color: #7cbf8f;
 }
 
 .profile_short_info_data_value {
@@ -270,13 +288,20 @@
 }
 
 .profile_short_info_age {
-  padding: 5px;
+  padding: 12px;
   margin-bottom: 15px;
+  cursor: pointer;
   color: #fff;
   box-sizing: border-box;
-  border: 1px solid #f5f3ef;
+  border: 1px solid #549e73;
   border-radius: 8px;
   background-color: inherit;
+}
+
+.profile_short_info_birth {
+  padding-top: 2px;
+  padding-bottom: 10px;
+  opacity: 0.6;
 }
 
 .profile_short_info_biography {
@@ -292,9 +317,9 @@
   padding: 15px 25px;
   cursor: pointer;
   color: #fff;
-  border: 2px solid #fff;
+  border: 2px solid #549e73;
   border-radius: 12px;
-  background-color: #3e7d68;
+  background-color: inherit;
   transition: border-color 0.3s ease;
 }
 

@@ -1,28 +1,31 @@
 import styles from './ForComponents.module.css';
 import { useState } from 'react';
-function LinkInput({ icon, label, value, onChange, onSave }) {
+function LinkInput({ icon, label, value, onChange, onSave, errorMessage }) {
   const hasValue = value && value.trim();
   const [redactLink, setRedactLink] = useState(false);
+
   function saveValue(e) {
     if (e.key === 'Enter') {
       setRedactLink(false);
       onSave();
     }
   }
+
   return (
     <div className={styles.contact_link}>
-      {redactLink ? (
+      {redactLink || errorMessage || !hasValue ? (
         <span className={styles.contact_icon}>{icon}</span>
       ) : (
         <a
           className={styles.contact_icon}
-          href={hasValue ? hasValue : undefined}
+          href={hasValue}
           target="_blank"
+          rel="noreferrer"
         >
           {icon}
         </a>
       )}
-      {redactLink || hasValue === '' ? (
+      {redactLink || hasValue === '' || errorMessage ? (
         <input
           value={hasValue || ''}
           placeholder={`Добавить ${label}`}
@@ -31,7 +34,11 @@ function LinkInput({ icon, label, value, onChange, onSave }) {
           disabled={!redactLink}
         />
       ) : (
-        <a href={hasValue ? hasValue : undefined} target="_blank">
+        <a
+          href={hasValue ? hasValue : undefined}
+          className={styles.contact_text_link}
+          target="_blank"
+        >
           {label}
         </a>
       )}

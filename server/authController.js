@@ -76,6 +76,7 @@ class AuthController {
       res.status(400).json({ message: 'Ошибка при входе' });
     }
   }
+
   async getUserInfo(req, res) {
     try {
       const user = await User.findById(req.user.id).select('-password');
@@ -90,6 +91,7 @@ class AuthController {
         .json({ message: 'Ошибка при получении данных пользователя' });
     }
   }
+
   async updateProfile(req, res) {
     try {
       const errors = validationResult(req);
@@ -97,18 +99,8 @@ class AuthController {
         const error = errors.array()[0];
         return res.status(400).json({ message: error.msg, field: error.path });
       }
-      const {
-        firstname,
-        lastname,
-        birthDate,
-        userLearn,
-        userExperience,
-        userProfession,
-        userCity,
-        userBiography,
-        shortBiography,
-        userStack,
-      } = req.body;
+      const { firstname, lastname, birthDate, userProfession, shortBiography } =
+        req.body;
       const userId = req.user.id;
 
       const updatedUser = await User.findByIdAndUpdate(
@@ -118,13 +110,8 @@ class AuthController {
             firstname,
             lastname,
             birthDate,
-            userLearn,
-            userExperience,
             userProfession,
-            userCity,
-            userBiography,
             shortBiography,
-            userStack,
           },
         },
         { new: true },
@@ -134,6 +121,52 @@ class AuthController {
     } catch (e) {
       console.log(e);
       res.status(400).json({ message: 'Ошибка при обновлении профиля' });
+    }
+  }
+
+  async aboutPerson(req, res) {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        const error = errors.array()[0];
+        return res.status(400).json({ message: error.msg, field: error.path });
+      }
+      const { userProfession, userCity, userBiography, userStack } = req.body;
+      const userId = req.user.id;
+
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        {
+          $set: {
+            userProfession,
+            userCity,
+            userBiography,
+            userStack,
+          },
+        },
+        { new: true },
+      ).select('-password');
+
+      return res.json({ updatedUser, message: 'Успешно обновлено' });
+    } catch (e) {
+      res.status(400).json({ message: 'Ошибка при обновлении профиля' });
+    }
+  }
+
+  async deleteSkill(req, res) {
+    try {
+      const { id } = req.params;
+      const userId = req.user.id;
+
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { $pull: { userStack: { id: id } } },
+        { new: true },
+      ).select('-password');
+
+      return res.json({ updatedUser, message: 'Навык удален' });
+    } catch (e) {
+      res.starus(400).json({ message: 'Ошибка при удалении' });
     }
   }
 
@@ -161,7 +194,6 @@ class AuthController {
 
       return res.json({ updatedUser, message: 'Успешно обновлено' });
     } catch (e) {
-      console.log(e);
       res.status(400).json({ message: 'Ошибка при обновлении профиля' });
     }
   }

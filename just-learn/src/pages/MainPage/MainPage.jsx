@@ -1,10 +1,14 @@
 import styles from './MainPage.module.css';
 import { useState, useEffect } from 'react';
 import CustomLink from '../../components/CustomLink';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { clearToken } from '../../store/tokenSlice';
 
 function MainPage() {
   const token = useSelector((state) => state.token.tokenValue);
+  const isLoading = useSelector((state) => state.token.isLoading);
+  const dispatch = useDispatch();
+
   const [lastName, setLastName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [profession, setProfession] = useState('');
@@ -25,7 +29,10 @@ function MainPage() {
       setFirstName(data.firstname);
       setShortBiography(data.shortBiography);
     } catch (err) {
-      console.log(err);
+      if (err.message === 'Пользователь не авторизован') {
+        localStorage.removeItem('token');
+        dispatch(clearToken);
+      }
     }
   }
 
@@ -39,13 +46,23 @@ function MainPage() {
     <section className={styles.welcome}>
       <div className={styles.welcome_info}>
         <div className={styles.welcome_info_cont}>
-          <p className={styles.welcome_job}>{profession}</p>
-          <h2 className={styles.welcome_info_title}>
-            Привет, я <br />
-            <span className={styles.user_name}>
-              {lastName} {firstName}
-            </span>
-          </h2>
+          <p className={styles.welcome_job}>
+            {profession ? profession : 'Напишите о себе, на странице профиля'}
+          </p>
+          {isLoading ? (
+            <p>Загрузка...</p>
+          ) : token ? (
+            <h2 className={styles.welcome_info_title}>
+              Привет, я <br />
+              <span className={styles.user_name}>
+                {lastName} {firstName}
+              </span>
+            </h2>
+          ) : (
+            <h2 className={styles.welcome_info_title}>
+              Чтобы улучшить ваше резюме
+            </h2>
+          )}
           <p>{shortBiography}</p>
         </div>
         <div className={styles.links}>

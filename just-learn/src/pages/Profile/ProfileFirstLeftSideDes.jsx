@@ -11,10 +11,12 @@ function ProfileLeftSideDes() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [birthDate, setBirthDate] = useState('');
-  const [birthDateInput, setBirthDateInput] = useState('');
   const [profession, setProfession] = useState('');
   const [shortBiography, setShortBiography] = useState('');
   const [dataMessage, setDataMessage] = useState('');
+  const displayDate = birthDate
+    ? new Date(birthDate).toLocaleDateString('ru-RU')
+    : 'Введите день рождения';
 
   function rotateRedactActive() {
     setRedactActive(!redactActive);
@@ -31,37 +33,40 @@ function ProfileLeftSideDes() {
         throw data;
       }
 
-      const date = new Date(data.birthDate);
-      const formatted = date.toLocaleDateString('ru-RU');
-
       setInitials(data.firstname[0] + data.lastname[0]);
       setFirstName(data.firstname);
       setLastName(data.lastname);
-      setBirthDate(formatted);
       setProfession(data.userProfession);
       setShortBiography(data.shortBiography);
-      console.log(data);
+      if (data.birthDate) {
+        const date = new Date(data.birthDate);
+        const formatted = date.toISOString().split('T')[0];
+        setBirthDate(formatted);
+      }
     } catch (err) {
-      console.log(err.message);
+      console.log(err, err.message);
     }
   }
 
   async function userUpdateInfo() {
     try {
-      const response = await fetch('http://localhost:5000/auth/profile', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-          Authorization: `Bearer ${token}`,
+      const response = await fetch(
+        'http://localhost:5000/auth/profile/fullName',
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            firstname: firstName,
+            lastname: lastName,
+            birthDate: birthDate,
+            userProfession: profession,
+            shortBiography: shortBiography,
+          }),
         },
-        body: JSON.stringify({
-          firstname: firstName,
-          lastname: lastName,
-          birthDate: birthDateInput,
-          userProfession: profession,
-          shortBiography: shortBiography,
-        }),
-      });
+      );
       const data = await response.json();
 
       if (!response.ok) {
@@ -113,20 +118,21 @@ function ProfileLeftSideDes() {
         {redactActive ? (
           <input
             type="date"
-            value={birthDateInput}
+            value={birthDate}
             className={styles.profile_short_info_age}
             onChange={(e) => {
-              setBirthDateInput(e.target.value);
+              setBirthDate(e.target.value);
             }}
           />
         ) : (
-          <p>{birthDate}</p>
+          <p className={styles.profile_short_info_birth}>{displayDate}</p>
         )}
         <EditableField
           active={redactActive}
           pClassName={styles.profile_short_info_data_value}
           placeholder={'Ваша отрасль'}
           value={profession}
+          aboutInput={'Укажите вашу отрасль'}
           onChange={(e) => {
             setProfession(e.target.value);
           }}
@@ -140,7 +146,7 @@ function ProfileLeftSideDes() {
               id={'redact'}
               width={16}
               height={16}
-              // className={styles.profile_short_redact}
+              className={styles.profile_short_redact}
               useClassName={styles.profile_short_redact_icon}
               onClick={() => setRedactActive(!redactActive)}
             />
@@ -148,7 +154,9 @@ function ProfileLeftSideDes() {
         </h2>
       </div>
       <div className={styles.profile_short_info_biography}>
-        {redactActive ? (
+        {!shortBiography && !redactActive ? (
+          <p>Кратко опишите ваш опыт</p>
+        ) : redactActive ? (
           <textarea
             className={styles.profile_aboutme_input}
             placeholder={'Коротко о вас'}
