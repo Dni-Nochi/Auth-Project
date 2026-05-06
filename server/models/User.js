@@ -9,7 +9,6 @@ const User = new Schema({
   gitHubUrl: { type: String },
   linkedinUrl: { type: String },
   headHunterUrl: { type: String },
-  userLearn: { type: Number },
   userExperience: { type: Number },
   userProfession: { type: String },
   userCity: { type: String },

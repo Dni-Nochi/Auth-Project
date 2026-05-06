@@ -15,16 +15,6 @@ function HeaderNav() {
             Главная страница
           </NavLink>
         </li>
-        <li>
-          <NavLink to={token ? 'about_me' : '/login'} className={setActive}>
-            Обо мне
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to={token ? 'contacts' : '/login'} className={setActive}>
-            Мои контакты
-          </NavLink>
-        </li>
       </ul>
     </nav>
   );

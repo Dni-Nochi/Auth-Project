@@ -1,6 +1,14 @@
 import styles from './ForComponents.module.css';
 import { useState } from 'react';
-function LinkInput({ icon, label, value, onChange, onSave, errorMessage }) {
+function LinkInput({
+  token,
+  icon,
+  label,
+  value,
+  onChange,
+  onSave,
+  errorMessage,
+}) {
   const hasValue = value && value.trim();
   const [redactLink, setRedactLink] = useState(false);
 
@@ -12,43 +20,51 @@ function LinkInput({ icon, label, value, onChange, onSave, errorMessage }) {
   }
 
   return (
-    <div className={styles.contact_link}>
-      {redactLink || errorMessage || !hasValue ? (
-        <span className={styles.contact_icon}>{icon}</span>
-      ) : (
-        <a
-          className={styles.contact_icon}
-          href={hasValue}
-          target="_blank"
-          rel="noreferrer"
+    <>
+      <div className={styles.contact_link}>
+        {redactLink || errorMessage || !hasValue || !token ? (
+          <span className={styles.contact_icon}>{icon}</span>
+        ) : (
+          <a
+            className={styles.contact_icon}
+            href={hasValue}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {icon}
+          </a>
+        )}
+        {redactLink || hasValue === '' || errorMessage || !token ? (
+          <input
+            value={hasValue || ''}
+            placeholder={`Добавить ${label}`}
+            onChange={(e) => onChange(e.target.value)}
+            onKeyDown={(e) => saveValue(e)}
+            className={`${styles.contact_link_input} ${errorMessage ? styles.contact_link_input_error : ''}`}
+            disabled={!redactLink}
+          />
+        ) : (
+          <a
+            href={hasValue ? hasValue : undefined}
+            className={styles.contact_text_link}
+            target="_blank"
+          >
+            {label}
+          </a>
+        )}
+        <button
+          className={styles.contact_action}
+          onClick={() => setRedactLink(!redactLink)}
         >
-          {icon}
-        </a>
-      )}
-      {redactLink || hasValue === '' || errorMessage ? (
-        <input
-          value={hasValue || ''}
-          placeholder={`Добавить ${label}`}
-          onChange={(e) => onChange(e.target.value)}
-          onKeyDown={(e) => saveValue(e)}
-          disabled={!redactLink}
-        />
+          {redactLink ? '+' : '✎'}
+        </button>
+      </div>
+      {token ? (
+        <p className={styles.contact_link_input_error}>{errorMessage}</p>
       ) : (
-        <a
-          href={hasValue ? hasValue : undefined}
-          className={styles.contact_text_link}
-          target="_blank"
-        >
-          {label}
-        </a>
+        <p>Пользователь не авторизован</p>
       )}
-      <button
-        className={styles.contact_action}
-        onClick={() => setRedactLink(!redactLink)}
-      >
-        {redactLink ? '+' : '✎'}
-      </button>
-    </div>
+    </>
   );
 }
 

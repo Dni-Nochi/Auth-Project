@@ -33,7 +33,7 @@ function ProfileLeftSideDes() {
         throw data;
       }
 
-      setInitials(data.firstname[0] + data.lastname[0]);
+      setInitials(data.lastname[0] + data.firstname[0]);
       setFirstName(data.firstname);
       setLastName(data.lastname);
       setProfession(data.userProfession);

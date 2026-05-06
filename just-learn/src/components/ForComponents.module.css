@@ -45,7 +45,7 @@
 .contact_text_link:hover {
   color: #fff;
 }
-.contact_link input {
+.contact_link_input {
   position: absolute;
   width: 100%;
   height: 52px;
@@ -59,13 +59,18 @@
   font-size: 14px;
   transition: border-color 0.3s ease;
 }
-.contact_link input:focus {
+.contact_link_input:focus {
   border-color: #f5f3ef;
   transition: border-color 0.3s ease;
 }
-.contact_link input::placeholder {
+.contact_link_input::placeholder {
   opacity: 0.6;
   color: #fff;
+}
+
+.contact_link_input_error {
+  color: #fd9b00;
+  border-color: #fd9b00;
 }
 
 .contact_action {
@@ -107,4 +112,108 @@
 .remove_user_skill:hover {
   color: #fff;
   transition: color 0.3s ease;
+}
+
+/* Для карточки проектов */
+
+.my__project_cont {
+  display: flex;
+  align-items: flex-start;
+  border-radius: 12px;
+}
+.my__project_header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  justify-content: center;
+  min-width: 600px;
+  background-color: #2f7f53;
+  border-radius: 12px;
+}
+
+.my__project_header p {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  padding: 12px;
+  border-radius: 20px;
+  color: #2f7f53;
+  background-color: #fff;
+}
+.my__project_header img {
+  height: 230px;
+  border-radius: 12px;
+}
+
+.my__project_main_info {
+  padding-left: 40px;
+  padding-block: 5px;
+  color: #2f7f53;
+}
+
+.my__project_main_info h2 {
+  font-size: 30px;
+}
+
+.my__project_main_info_description {
+  padding-top: 15px;
+  padding-bottom: 30px;
+  font-size: 20px;
+  color: #8b9c94;
+}
+
+.my__project_main_info__description_cont {
+  padding-bottom: 28px;
+}
+
+.my__project_main_info_description_project_info {
+  padding-bottom: 15px;
+  border-bottom: 1px solid #a6c8b5;
+}
+
+.my__project_main_info_description_list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.my__project_main_info_dt {
+  padding-top: 16px;
+}
+.my__project_main_info_dd {
+  position: relative;
+  display: flex;
+  justify-content: end;
+  max-width: 340px;
+  padding-block: 16px;
+}
+
+.my__project_main_info_dd::after {
+  position: absolute;
+  bottom: 0;
+  content: '';
+  width: calc(100% * 2);
+  border-top: 1px solid #a6c8b5;
+}
+
+.my__project_main_info_link {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  padding: 12px;
+  border-radius: 20px;
+  color: #fff;
+  background-color: #2f7f53;
+  transition: opacity 0.3s ease;
+}
+
+.my__project_main_info_link:hover {
+  opacity: 0.7;
+}
+
+.my__project_main_info_link span {
+  padding-left: 10px;
+}
+.my__project_main_info_link use {
+  fill: #fff;
 }

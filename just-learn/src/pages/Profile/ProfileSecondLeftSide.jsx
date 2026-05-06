@@ -78,6 +78,7 @@ function ProfileSecondLeftSide() {
     <div className={styles.profile_contact_links}>
       <h2>Ссылки</h2>
       <LinkInput
+        token={token}
         icon="GH"
         label="GitHub"
         value={gitHubUrl}
@@ -85,8 +86,8 @@ function ProfileSecondLeftSide() {
         onSave={updateLinks}
         errorMessage={errorGitHubUrl}
       />
-      {errorGitHubUrl}
       <LinkInput
+        token={token}
         icon="in"
         label="LinkedIn"
         value={linkedinUrl}
@@ -94,8 +95,8 @@ function ProfileSecondLeftSide() {
         onSave={updateLinks}
         errorMessage={errorLinkedinUrl}
       />
-      {errorLinkedinUrl}
       <LinkInput
+        token={token}
         icon="hh"
         label="hh.kz"
         value={headHunterUrl}
@@ -103,7 +104,6 @@ function ProfileSecondLeftSide() {
         onSave={updateLinks}
         errorMessage={errorHeadHunter}
       />
-      {errorHeadHunter}
       {dataAnswer}
     </div>
   );

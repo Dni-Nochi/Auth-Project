@@ -13,9 +13,17 @@ function ProfileFirstRightSideDes() {
   const [city, setCity] = useState('');
   const [biography, setBiography] = useState('');
   const [dataMessage, setDataMessage] = useState('');
+  const [errorStack, setErrorStack] = useState('');
 
   function rotateRedact() {
     setRedact(!redact);
+  }
+
+  function profileExit() {
+    localStorage.removeItem('token');
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   }
 
   async function getUserInfo() {
@@ -39,18 +47,22 @@ function ProfileFirstRightSideDes() {
   }
 
   function createSkill() {
-    if (!inputValue.trim()) return;
+    if (!inputValue.trim()) {
+      setErrorStack('');
+      return;
+    }
 
     const isDuplicate = stack.some(
       (item) => item.value.toLowerCase() === inputValue.trim().toLowerCase(),
     );
 
     if (isDuplicate) {
-      setDataMessage('Такой навык уже есть');
+      setErrorStack('Такой навык уже есть');
       return;
     }
     setStack([...stack, { value: inputValue, id: Date.now() + Math.random() }]);
     setInputValue('');
+    setErrorStack('');
   }
 
   async function userUpdateRequest() {
@@ -107,7 +119,7 @@ function ProfileFirstRightSideDes() {
       if (!response.ok) {
         throw data;
       }
-      console.log(data);
+
       setStack(stack.filter((item) => item.id !== skillId));
       setDataMessage(data.message);
       setTimeout(() => {
@@ -199,16 +211,23 @@ function ProfileFirstRightSideDes() {
           </button>
           <input
             placeholder="Ваш стек..."
-            className={`${styles.profile_create_skill} ${stackActive && redact ? '' : styles.hidden}`}
+            className={`${styles.profile_create_skill} ${stackActive && redact ? '' : styles.hidden} ${errorStack ? styles.profile_data_message_error : ''}`}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && createSkill()}
             disabled={!redact}
           />
         </div>
-        <p>{dataMessage}</p>
+        <p
+          className={`${styles.profile_data_message} ${errorStack ? styles.profile_data_message_error : ''}`}
+        >
+          {errorStack ? errorStack : dataMessage}
+        </p>
       </div>
       <div className={styles.profile_redact_cont}>
+        <button className={styles.profile_save} onClick={() => profileExit()}>
+          Выйти из аккаунта
+        </button>
         {redact ? (
           <div className={styles.profile_redact_save}>
             <button
@@ -216,6 +235,7 @@ function ProfileFirstRightSideDes() {
               onClick={() => {
                 rotateRedact();
                 setDataMessage('');
+                setErrorStack('');
               }}
             >
               Отменить

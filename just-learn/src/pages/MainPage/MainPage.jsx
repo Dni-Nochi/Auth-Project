@@ -1,8 +1,10 @@
 import styles from './MainPage.module.css';
 import { useState, useEffect } from 'react';
-import CustomLink from '../../components/CustomLink';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearToken } from '../../store/tokenSlice';
+import ActiveAboutMe from './ActiveAboutMe';
+import AbouttProjects from './AboutProjects';
+import StaticAboutMe from '../AboutMe/StaticAboutMe';
 
 function MainPage() {
   const token = useSelector((state) => state.token.tokenValue);
@@ -11,8 +13,19 @@ function MainPage() {
 
   const [lastName, setLastName] = useState('');
   const [firstName, setFirstName] = useState('');
+  const [birthDate, setBirthDate] = useState('');
+  const [email, setEmail] = useState('');
+  const [city, setCity] = useState('');
   const [profession, setProfession] = useState('');
   const [shortBiography, setShortBiography] = useState('');
+  const [biography, setBiography] = useState('');
+  const [stack, setStack] = useState([]);
+  const [githubLink, setGitHubLink] = useState('');
+  const [linkedinLink, setLinkedinLink] = useState('');
+  const [hhLink, setHhLink] = useState();
+  const displayDate = birthDate
+    ? new Date(birthDate).toLocaleDateString('ru-RU')
+    : '';
 
   async function getInfo() {
     try {
@@ -24,14 +37,26 @@ function MainPage() {
       if (!response.ok) {
         throw data;
       }
-      setProfession(data.userProfession);
       setLastName(data.lastname);
       setFirstName(data.firstname);
+      setEmail(data.email);
+      setCity(data.userCity);
+      setProfession(data.userProfession);
+      if (data.birthDate) {
+        const date = new Date(data.birthDate);
+        const formatted = date.toISOString().split('T')[0];
+        setBirthDate(formatted);
+      }
       setShortBiography(data.shortBiography);
+      setBiography(data.userBiography);
+      setStack(data.userStack);
+      setGitHubLink(data.gitHubUrl);
+      setLinkedinLink(data.linkedinUrl);
+      setHhLink(data.headHunterUrl);
     } catch (err) {
       if (err.message === 'Пользователь не авторизован') {
         localStorage.removeItem('token');
-        dispatch(clearToken);
+        dispatch(clearToken());
       }
     }
   }
@@ -43,44 +68,27 @@ function MainPage() {
   }, [token]);
 
   return (
-    <section className={styles.welcome}>
-      <div className={styles.welcome_info}>
-        <div className={styles.welcome_info_cont}>
-          <p className={styles.welcome_job}>
-            {profession ? profession : 'Напишите о себе, на странице профиля'}
-          </p>
-          {isLoading ? (
-            <p>Загрузка...</p>
-          ) : token ? (
-            <h2 className={styles.welcome_info_title}>
-              Привет, я <br />
-              <span className={styles.user_name}>
-                {lastName} {firstName}
-              </span>
-            </h2>
-          ) : (
-            <h2 className={styles.welcome_info_title}>
-              Чтобы улучшить ваше резюме
-            </h2>
-          )}
-          <p>{shortBiography}</p>
-        </div>
-        <div className={styles.links}>
-          <CustomLink
-            to={token ? 'contacts' : '/login'}
-            className={styles.for_my_link}
-          >
-            Мои контакты
-          </CustomLink>
-          <CustomLink
-            to={token ? 'about_me' : '/login'}
-            className={styles.for_my_link}
-          >
-            Обо мне
-          </CustomLink>
-        </div>
-      </div>
-    </section>
+    <main className={styles.welcome}>
+      <ActiveAboutMe
+        token={token}
+        isLoading={isLoading}
+        lastName={lastName}
+        firstName={firstName}
+        birthDate={displayDate}
+        email={email}
+        city={city}
+        profession={profession}
+        shortBiography={shortBiography}
+        biography={biography}
+        stack={stack}
+        githubLink={githubLink}
+        linkedinLink={linkedinLink}
+        hhLink={hhLink}
+      />
+
+      <AbouttProjects />
+      <StaticAboutMe />
+    </main>
   );
 }
 
