@@ -5,7 +5,7 @@ function StaticAboutMe() {
     <article className={styles.static_about_me_content} id="about_me">
       <h2 className={styles.static_about_me_title}>Про меня</h2>
       <div className={styles.static_about_me_info_cont}>
-        <section className={styles.static_about_me_info_part}>
+        <section>
           <h3 className={styles.static_about_me_info_part_title}>
             Адилов Тимур
           </h3>
